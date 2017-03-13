@@ -4,5 +4,5 @@ export const HTTP_URL_API={
     USER_REGISTER:BASE_URL+'USER/Register',
     RANKING:BASE_URL+'USER/UserWinRanking',
     USER_SCORE:BASE_URL+'USER/scoredetail',
-    USER_MODIFY:BASE_URL+'USER/EDIT'
+    USER_MODIFY:BASE_URL+'USER/Edit'
 };

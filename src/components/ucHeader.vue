@@ -76,7 +76,7 @@ export default{
 .user_logout-img{width:55%}
 .user_login-img{width:28%}
 .info_div{font-size:.75rem;font-family:黑体;float:left;height:100%;color:#eeeeee;width:50%}
-.coindiv{padding:0.5% 0% 1.5% 3%;width:95%;font-size:.6rem;font-family:"黑体";color:#808080}
+.coindiv{padding:0.5% 0% 1.5% 3%;width:95%;font-size:.7rem;font-family:"黑体";color:#808080}
 .statusdiv{height:95%;float:left;padding-top:3%;width:28%}
 .info_div p{height:15%;text-shadow:#e8770f 1px 0 0,#e8770f 0 1px 0,#e8770f -1px 0 0,#e8770f 0 -1px 0;-webkit-text-shadow:#e8770f 1px 0 0,#e8770f 0 1px 0,#e8770f -1px 0 0,#e8770f 0 -1px 0;-moz-text-shadow:#e8770f 1px 0 0,#e8770f 0 1px 0,#e8770f -1px 0 0,#e8770f 0 -1px 0}
 .coindiv_l{width:45%;float:left;padding:1.5% 0%}

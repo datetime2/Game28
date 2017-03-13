@@ -22,12 +22,14 @@ export const toThousands = (value) => {
 //参数签名
 export const createSign = (params) => {
     if (params instanceof Object) {
-        let signArray = [], tempArray = []
+        let signArray = [], tempArray = [], emptyArray = []
         for (var i in params) {
             if (params.hasOwnProperty(i)) {
                 if (params[i] != "") {
                     tempArray.push(new Array(i, params[i]))
                 }
+                else
+                    emptyArray.push(i + '=' + '')
             }
         }
         let sortSignArray = tempArray.sort(function (x, y) {
@@ -38,7 +40,8 @@ export const createSign = (params) => {
         }
         let str = signArray.join('&')
         signArray.push('sign=' + md5(str + "&key=" + signKey))
-        return signArray.join('&')
+        let newArray = signArray.concat(emptyArray)
+        return newArray.join('&')
     }
     else return ''
 }

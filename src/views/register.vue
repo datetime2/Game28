@@ -69,7 +69,7 @@ methods:{
             password:md5(this.password.trim())
         }
         httpPost(HTTP_URL_API.USER_REGISTER,createSign(data)).then((res)=>{
-            if(res && res.code==0){
+            if(res && res.data.code==0){
                 let instance = Toast('注册成功')
                 setTimeout(() => {
                     instance.close()

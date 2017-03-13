@@ -1,0 +1,4 @@
+.mint-tabbar{background-color: #e93f40 !important;}
+.mint-tabbar > .mint-tab-item.is-selected{background-color:#bc2726 !important;color:#fff !important;}
+.mint-tab-item-label{color:#fff !important;}
+.mint-tab-item-icon {width: 65px !important;height: 40px !important;margin: 0 auto !important;}

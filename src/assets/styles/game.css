@@ -1,0 +1,17 @@
+.gamediv{margin-top:.7rem;}
+.gamediv ul,.gamediv ul li{padding:0;margin:0}
+.gclass{width:97%;border-radius:10px;background-color:#fff;margin:2% auto 0%;padding:0 0 3% 0}
+.bc{border-bottom:1px solid #ccc;font-size:130%;padding:1% 3%}
+.gamediv .gc li{border-radius:5px;margin:2% 1% 0% 1.8%;text-align:center;padding:1%;width:20%;height:150%;line-height:150%;list-style:none;float:left;}
+.gamediv .gc li a{color:#fff}
+.gamediv .g1 li{background-color:#F05550}
+.gamediv .g1 .bc{color:#F05550}
+.gamediv .g2 li{background-color:#23AEE5}
+.gamediv .g2 .bc{color:#23AEE5}
+.gamediv .g3 li{background-color:#FFAB10}
+.gamediv .g3 .bc{color:#FFAB10}
+.gamediv .g4 li{background-color:#B28AD1}
+.gamediv .g4 .bc{color:#B28AD1}
+.gamediv .g5 li{background-color:#E062A9}
+.gamediv .g5 .bc{color:#E062A9}
+.clear{clear:both}

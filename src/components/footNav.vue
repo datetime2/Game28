@@ -1,0 +1,42 @@
+<template>
+<mt-tabbar v-model="selected">
+      <mt-tab-item id="index" @click.native="go('index')">
+        <img src="../assets/images/common/btn_home.png" alt="" slot="icon">
+        首页
+      </mt-tab-item>
+      <mt-tab-item id="game" @click.native="go('game')">
+        <img src="../assets/images/common/btn_game.png" alt="" slot="icon">
+        游戏乐园
+      </mt-tab-item>
+      <mt-tab-item id="sort" @click.native="go('sort')">
+        <img src="../assets/images/common/btn_ranking.png" alt="" slot="icon">
+        牛人榜
+      </mt-tab-item>
+      <mt-tab-item id="good" @click.native="go('good')">
+        <img src="../assets/images/common/btn_exchange.png" alt="" slot="icon">
+        兑换
+      </mt-tab-item>
+      <mt-tab-item id="user" @click.native="go('user')">
+        <img src="../assets/images/common/btn_member.png" alt="" slot="icon">
+        会员
+      </mt-tab-item>
+    </mt-tabbar>
+</template>
+<script>
+export default{
+created () {
+    var route = this.$route.name
+    this.selected = route=='detail'?'game':route
+  },
+data(){
+    return {
+        selected: 'index'
+    }
+},
+methods: {
+    go (routeName) {
+      this.$router.push({name: routeName})
+    }
+  }
+}
+</script>

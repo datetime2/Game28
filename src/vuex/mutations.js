@@ -4,9 +4,6 @@ const USER_LOGIN = 'USER_LOGIN'
 const USER_LOGOUT = 'USER_LOGOUT'
 const USER_REGISTER = 'USER_REGISTER'
 const USER_CHANGE='USER_CHANGE'
-import axios from 'axios'
-import { Toast } from 'mint-ui'
-import { HTTP_URL_API } from '../data/api'
 export default {
     [CHANGE_TITLE](state, title) {
         state.title = title;

@@ -12,7 +12,7 @@
         <img src="../assets/images/common/btn_ranking.png" alt="" slot="icon">
         牛人榜
       </mt-tab-item>
-      <mt-tab-item id="good" @click.native="go('good')">
+      <mt-tab-item id="exchange" @click.native="go('exchange')">
         <img src="../assets/images/common/btn_exchange.png" alt="" slot="icon">
         兑换
       </mt-tab-item>

@@ -18,4 +18,5 @@ export default {
 .fade-enter,.fade-leave-to{opacity:0}
 a{text-decoration:none}
 [v-cloak]{display:none}
+.index-container{width:100%;position:absolute;top:40px;bottom:66px;overflow-y:scroll}
 </style>

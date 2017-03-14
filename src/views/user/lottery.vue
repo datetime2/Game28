@@ -12,7 +12,6 @@ import { mapMutations } from 'vuex'
 import FootNav from '../../components/footNav'
 import HeadNav from '../../components/topNav'
 import UcHeader from '../../components/ucHeader'
-
 export default{
 created () {
     this.setTitle()

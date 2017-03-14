@@ -8,7 +8,6 @@ export default new Router({
     { path: '/game', name: 'game', component: require('../views/game/index') },
     { path: '/detail/:type/:text', name: 'detail', component: require('../views/game/detail'),meta: { requiresAuth: true }},
     { path: '/sort', name: 'sort', component: require('../views/sort') },
-    { path: '/good', name: 'good', component: require('../views/good'),meta: { requiresAuth: true }},
     { path: '/login', name: 'login', component: require('../views/login') },
     { path: '/register', name: 'register', component: require('../views/register') },
     { path: '/news', name: 'news', component: require('../views/news/index') },
@@ -19,7 +18,6 @@ export default new Router({
     { path: '/user/sign', name: 'sign', component: require('../views/user/sign'),meta: { requiresAuth: true }},
     { path: '/user/information', name: 'information', component: require('../views/user/information'),meta: { requiresAuth: true }},
     { path: '/user/relief', name: 'relief', component: require('../views/user/relief'),meta: { requiresAuth: true }}, 
-
     { path: '/user/bank', name: 'bank', component: require('../views/user/bank'),meta: { requiresAuth: true }},    
     { path: '/user/card', name: 'card', component: require('../views/user/card'),meta: { requiresAuth: true }},    
     { path: '/user/exchange', name: 'exchange', component: require('../views/user/exchange'),meta: { requiresAuth: true }},    

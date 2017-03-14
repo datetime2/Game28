@@ -203,8 +203,7 @@ computed:mapState({ userInfo: state => state.userInfo }),
 components: {HeadNav,FootNav,swiper,swiperSlide}
 }
 </script>
-<style>
-.index-container{width:100%;position:absolute;top:40px;bottom:66px;overflow-y:scroll}
+<style scoped>
 .loginstatus{width:100%;height:40px;border-bottom:2px  solid #aeaeae;padding-top:3px;border-bottom:none;font-weight:bold;font-family:"黑体";font-size:75%}
 .loginstatus .ls_l{float:left;margin-left:15px;padding-left:3px;height:40px;line-height:40px;text-align:center}
 .loginstatus .ls_l a{color:#888;font-size:1rem;}

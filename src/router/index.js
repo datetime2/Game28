@@ -31,7 +31,5 @@ export default new Router({
     { path: '/user/reffer', name: 'reffer', component: require('../views/user/reffer'),meta: { requiresAuth: true }},    
     { path: '/user/salary', name: 'salary', component: require('../views/user/salary'),meta: { requiresAuth: true }},    
     { path: '/user/score', name: 'score', component: require('../views/user/score'),meta: { requiresAuth: true }} 
-    
-       
   ]
 })

@@ -2,7 +2,7 @@
   <div>
     <HeadNav></HeadNav>
     <div class="index-container" id="index-container">
-<UcHeader></UcHeader>
+      <UcHeader></UcHeader>
     </div>
     <FootNav></FootNav>
   </div>

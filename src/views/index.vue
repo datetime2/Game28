@@ -5,7 +5,7 @@
 	<div class="index-container">
 		<div class="swiper">
 			<swiper :options="swiperOption">
-				<swiper-slide v-for="item in Swipers">
+				<swiper-slide v-for="item in Swipers" :key="item.img">
 					<a :href="item.url">
 						<img :src="item.img" class="swiper-item" alt="" height="20%" width="100%"
 						/>

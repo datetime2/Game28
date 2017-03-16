@@ -11,29 +11,30 @@
 			</div>
 		</div>
 		<div class="newsdiv">
-			<ul>
-
-				<li>
+			<ul v-infinite-scroll="loadMoreMessage" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+				<li v-for="message in messageList">
 					<div class="bg">
 						<div>
 							<div class="leftdiv">
 								<img src="../../assets/images/news/n_1.png" alt="" class="hdpic">
 							</div>
-							<router-link :to="{name:'newsdetail',params:{id:31,title:'[新闻]【好彩投28】PK10日赚100大洋模式'}}">
+							<router-link :to="{name:'newsdetail',params:{id:message.Id,title:message.Title}}">
 								<div class="infodiv">
 									<p class="title">
-										[新闻]【好彩投28】PK10日赚100大洋模式
+										[{{message.TypeName}}]{{message.Title}}
 									</p>
 									<p class="time">
-										2017-03-09
+										{{message.CreateDate}}
 									</p>
 								</div>
 							</router-link>
 						</div>
 					</div>
 				</li>
-
 			</ul>
+			<p v-show="loading" class="page-infinite-loading">
+          			拼命加载中...
+        	</p>
 		</div>
     <div class="clear"></div>
 	</div>
@@ -45,16 +46,60 @@
 import { mapMutations } from 'vuex'
 import FootNav from '../../components/footNav'
 import HeadNav from '../../components/topNav'
+import {HTTP_URL_API} from '../../data/api'
+import axios from 'axios'
+import { InfiniteScroll } from 'mint-ui'
 export default{
+data(){
+	return{
+		page:1,
+		size:13,
+		messageList:[],
+		maxPage:1,
+		loading:false
+	}
+},
 created () {
     this.setTitle()
-  },     
+  },
+mounted(){
+	this.getMessage()
+},    
 methods:{
     ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT']),
     setTitle(){
         this.CHANGE_TITLE('新闻公告')
         this.SHOW_BACK_BUT(true)
-    }
+    },
+	getMessage(){
+		this.loadMessage(1,false)
+    },
+	loadMoreMessage(){
+		this.loading=true		
+		this.page++
+		this.loadMessage(this.page,true)
+		this.loading=false			
+	},
+	loadMessage(__page,__isScroll){
+		axios.get(HTTP_URL_API.SYSTEM_MESSAGE,
+		{
+			params:{page:__page,size:this.size}
+		})
+		.then((res) => {
+			if(res.data.rows){
+				this.maxPage=Math.ceil(res.data.total/res.data.pagesize)
+				if(!__isScroll){
+					this.messageList = res.data.rows
+				}
+				else{
+					let newMessageList=this.messageList.concat(res.data.rows)
+					this.messageList=newMessageList
+				}
+			}
+			else
+				this.loading=false
+      	})
+	}
   },
   components: {HeadNav,FootNav}
 }
@@ -72,4 +117,6 @@ methods:{
 .newsdiv ul li .bg .infodiv p.title{font-size:.8rem;padding-top:0%;color:#888888}
 .newsdiv ul li .bg .infodiv p.time{float:right;color:#888888;font-size:.8rem;}
 .clear{clear:both;height: 50px;}
+.page-infinite-loading{text-align:center;height:50px;line-height:50px;font-size:.75rem;}
+.page-infinite-loading div{display:inline-block;vertical-align:middle;margin-right:5px}
 </style>

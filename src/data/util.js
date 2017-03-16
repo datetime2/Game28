@@ -61,8 +61,20 @@ export const httpPost = (_apiUrl, _params) => {
         })
     })
 }
+//http Get
+export const httpGet = (_apiUrl, _params) => {
+    return new Promise((resolve, reject) => {
+        axios.get(_apiUrl, { params: _params }).then(function (response) {
+            resolve(response)
+        }).catch(function (error) {
+            console.log(error)
+            reject(error)
+        })
+    })
+}
 export default {
     toThousands,
     createSign,
-    httpPost
+    httpPost,
+    httpGet
 }

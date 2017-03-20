@@ -33,7 +33,7 @@
 			</a>
 		</li>
 		<li>
-			<router-link :to="{name:'statics'}">
+			<router-link :to="{name:'statics',params:{title:title}}">
 				<span class="">
 					统计
 				</span>
@@ -868,11 +868,16 @@ import FootNav from '../../components/footNav'
 import HeadNav from '../../components/topNav'
 import{toThousands} from '../../data/util'
 export default{
+data(){
+	return{
+	}
+},	
 created () {
     this.setTitle()
   },     
 computed: mapState({
-    userInfo: state => state.userInfo
+    userInfo: state => state.userInfo,
+	title:state=>state.title
   }),  
 methods:{
     ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT']),

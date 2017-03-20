@@ -6,7 +6,8 @@ Vue.use(Vuex)
 const state = {
     title:'好彩投28 VUE2',
     showBackBut:true,
-    userInfo:JSON.parse(window.localStorage.getItem('userStorage')) || {}
+    userInfo:JSON.parse(window.localStorage.getItem('userStorage')) || {},
+    gameCode:''
 }
 export default new Vuex.Store({
     state,

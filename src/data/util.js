@@ -39,7 +39,7 @@ export const createSign = (params) => {
             signArray.push(sortSignArray[j][0] + "=" + sortSignArray[j][1])
         }
         let str = signArray.join('&')
-        signArray.push('sign=' + md5(str + "&key=" + signKey))
+        signArray.push('sign=' + (md5(str + "&key=" + signKey)).toUpperCase())
         let newArray = signArray.concat(emptyArray)
         return newArray.join('&')
     }

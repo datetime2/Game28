@@ -72,9 +72,22 @@ export const httpGet = (_apiUrl, _params) => {
         })
     })
 }
+//判断数组中是否包含元素
+export const inArray = (_element, _array) => {
+    if (typeof _element == "string" || typeof _element == "number") {
+        var len = _array.length
+        for (var i = 0; i < len; i++) {
+            if (_element === _array[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
 export default {
     toThousands,
     createSign,
     httpPost,
-    httpGet
+    httpGet,
+    inArray
 }

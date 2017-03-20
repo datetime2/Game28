@@ -27,7 +27,7 @@
                 <ul class="gc">
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:'dd28',text:'蛋蛋28'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:1006,text:'蛋蛋28'}}">
                                 <div class="intro">
                                     <div class="name">蛋蛋28</div>
                                 </div>
@@ -36,7 +36,7 @@
                     </li>
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:'dd16',text:'蛋蛋16'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:1007,text:'蛋蛋16'}}">
                                 <div class="intro">
                                     <div class="name">蛋蛋16</div>
                                 </div>

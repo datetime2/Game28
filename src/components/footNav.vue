@@ -23,14 +23,17 @@
     </mt-tabbar>
 </template>
 <script>
+import {inArray} from '../data/util'
 export default{
 created () {
     var route = this.$route.name
-    this.selected = route=='detail'?'game':route
+    this.selected =inArray(route,this.gameColl)?'game':inArray(route,this.userColl)?'user':route
   },
 data(){
     return {
-        selected: 'index'
+        selected: 'index',
+        gameColl:['detail','helper','model','record','statics','trend'],
+        userColl:['bank','card','information','lottery','modify','myreffer','operate','profit','ranking','reffer','salary','score','sign']
     }
 },
 methods: {

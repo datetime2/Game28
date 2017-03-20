@@ -12,25 +12,25 @@
               </router-link>
             </li>
             <li>
-              <router-link :to="{name:'record',params:{type:type,text:title}}">
+          <router-link :to="{name:'record',params:{type:type,text:title}}">
                 <span class="">
                   记录
                 </span>
               </router-link>
             </li>
             <li>
-              <a href="/m/bj16/model">
+              <router-link :to="{name:'model',params:{title:title}}">
                 <span class="">
                   模式
                 </span>
-              </a>
+              </router-link>
             </li>
             <li>
-              <a href="/m/bj16/helper/">
+              <router-link :to="{name:'helper',params:{title:title}}">
                 <span class="">
                   规则
                 </span>
-              </a>
+              </router-link>
             </li>
             <li>
               <router-link :to="{name:'statics',params:{title:title}}">
@@ -40,11 +40,11 @@
               </router-link>
             </li>
             <li>
-              <a href="/m/bj16/Trend/">
+              <router-link :to="{name:'trend',params:{title:title}}">
                 <span class="">
                   走势
                 </span>
-              </a>
+              </router-link>
             </li>
           </ul>
         </div>

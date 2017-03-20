@@ -12,7 +12,7 @@
 			</a>
 		</li>
 		<li>
-      <router-link :to="{name:'statics'}">
+      <router-link :to="{name:'record',params:{type:type,text:title}}">
 				<span class="">
 					记录
 				</span>
@@ -870,6 +870,7 @@ import{toThousands} from '../../data/util'
 export default{
 data(){
 	return{
+		type:this.$route.params['type']
 	}
 },	
 created () {
@@ -910,8 +911,8 @@ methods:{
 .div_2 ul li{height:10%;list-style:none;}
 .div_3 ul li i,.div_2 ul li i,#liTimer i{font-size:.85rem;color:#e64047;padding:0 3px;font-style:normal}
 .div_2 ul li,.div_3 ul li{float:left;list-style:none;}
-.table{float:left;width:100%;padding:0}
-.bordered{background:#FFF;color:#555555;font-size:.6rem;}
+.table{float:left;width:100%;padding:0;text-align: center;}
+.bordered{background:#FFF;color:#555555;font-size:.6rem;border-spacing: 0;}
 table th{background:#e93f40;color:#FFF}
 table td{border:1px solid #ccc;border-top:none;border-left:none}
 .pagetable{font-family:"Microsoft Yahei",Georgia,"Times New Roman",Times,serif;margin-top:2%;margin-bottom:2%;text-align:center}

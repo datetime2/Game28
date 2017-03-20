@@ -5,14 +5,14 @@
         <div class="menudiv2">
           <ul>
             <li>
-              <a href="/m/bj16/">
+              <router-link :to="{name:'detail',params:{type:type,text:title}}">
                 <span class="">
                   首页
                 </span>
-              </a>
+              </router-link>
             </li>
             <li>
-              <router-link :to="{name:'statics'}">
+              <router-link :to="{name:'record',params:{type:type,text:title}}">
                 <span class="">
                   记录
                 </span>
@@ -96,7 +96,8 @@ import { Toast } from 'mint-ui'
 export default{
 data(){
   return{
-    staticList:[]
+    staticList:[],
+    type:this.$route.params['type']
   }
 },  
 created () {

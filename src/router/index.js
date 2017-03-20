@@ -7,6 +7,7 @@ export default new Router({
     { path: '/index', name: 'index', component: require('../views/index')},
     { path: '/game', name: 'game', component: require('../views/game/index') },
     { path: '/game/detail/:type/:text', name: 'detail', component: require('../views/game/detail'),meta: { requiresAuth: true }},
+    { path: '/game/statics', name: 'statics', component: require('../views/game/statics'),meta: { requiresAuth: true }},
     { path: '/sort', name: 'sort', component: require('../views/sort') },
     { path: '/login', name: 'login', component: require('../views/login') },
     { path: '/register', name: 'register', component: require('../views/register') },

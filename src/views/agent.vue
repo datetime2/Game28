@@ -97,7 +97,7 @@ methods:{
 .agentdiv ul li .bg .infodiv{width:60%;float:left}
 .agentdiv ul li .bg p{font-family:"黑体";font-size:.9rem;margin:5px;height:100%;line-height:150%}
 .agentdiv ul li .bg p img{width:7%;vertical-align:middle}
-.agentdiv ul li .bg .infodiv .qq{color:#ff7700;font-size:22px}
+.agentdiv ul li .bg .infodiv .qq{color:#ff7700;font-size:1.1rem}
 .agentdiv ul li .bg .infodiv .qq img{width:14%}
 .agentdiv ul li .bg .infodiv .sign{color:#999999;font-size:.6rem;}
 .agentdiv ul li .bg .oprdiv{width:22%;float:right;position:relative;min-height:0px;height:200%}

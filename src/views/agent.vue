@@ -1,62 +1,64 @@
 <template>
-  <div>
-    <HeadNav></HeadNav>
-    <div class="index-container" id="index-container">
-<div class="agentdiv">
-	<ul class="datalist">
-		<li v-for="item in Agents" :key="item.name">
-			<div class="bg">
-				<div>
-					<div class="headdiv">
-						<img src="../assets/images/home/h2.png" class="heading">
-					</div>
-					<div class="infodiv">
-						<ul>
-							<li>
-								<p>
-									{{item.name}}
-									<img src="../assets/images/home/ag_xx.png">
-									<img src="../assets/images/home/ag_xx.png">
-									<img src="../assets/images/home/ag_xx.png">
-									<img src="../assets/images/home/ag_xx.png">
-									<img src="../assets/images/home/ag_xx.png">
-								</p>
-							</li>
-							<li>
-								<p class="qq">
-									<img src="../assets/images/home/qq.png">
-									{{item.qq}}
-								</p>
-							</li>
-							<li>
-								<p class="sign">
-									{{item.remark}}
-								</p>
-							</li>
-						</ul>
-					</div>
-					<div class="oprdiv">
-						<a :href="getQQIM(item.qq)" target="_blank">
-							<img src="../assets/images/home/btn_mslx.png">
-						</a>
-					</div>
-					<div class="line">
-					</div>
-					<div class="signdiv">
-						<img src="../assets/images/home/lbl1.png">
-						<img src="../assets/images/home/lbl2.png">
-						<img src="../assets/images/home/lbl3.png">
-						<img src="../assets/images/home/lbl4.png">
-						<img src="../assets/images/home/lbl5.png">
-					</div>
-				</div>
+	<div>
+		<HeadNav>
+		</HeadNav>
+		<div class="index-container" id="index-container">
+			<div class="agentdiv">
+				<ul class="datalist">
+					<li v-for="item in Agents" :key="item.name">
+						<div class="bg">
+							<div>
+								<div class="headdiv">
+									<img src="../assets/images/home/h2.png" class="heading">
+								</div>
+								<div class="infodiv">
+									<ul>
+										<li>
+											<p>
+												{{item.name}}
+												<img src="../assets/images/home/ag_xx.png">
+												<img src="../assets/images/home/ag_xx.png">
+												<img src="../assets/images/home/ag_xx.png">
+												<img src="../assets/images/home/ag_xx.png">
+												<img src="../assets/images/home/ag_xx.png">
+											</p>
+										</li>
+										<li>
+											<p class="qq">
+												<img src="../assets/images/home/qq.png">
+												{{item.qq}}
+											</p>
+										</li>
+										<li>
+											<p class="sign">
+												{{item.remark}}
+											</p>
+										</li>
+									</ul>
+								</div>
+								<div class="oprdiv">
+									<a :href="getQQIM(item.qq)" target="_blank">
+										<img src="../assets/images/home/btn_mslx.png">
+									</a>
+								</div>
+								<div class="line">
+								</div>
+								<div class="signdiv">
+									<img src="../assets/images/home/lbl1.png">
+									<img src="../assets/images/home/lbl2.png">
+									<img src="../assets/images/home/lbl3.png">
+									<img src="../assets/images/home/lbl4.png">
+									<img src="../assets/images/home/lbl5.png">
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
 			</div>
-		</li>
-	</ul>
-</div>
-    </div>
-    <FootNav></FootNav>
-  </div>
+		</div>
+		<FootNav>
+		</FootNav>
+	</div>
 </template>
 <script>
 import { mapMutations } from 'vuex'

@@ -1,4 +1,4 @@
-const BASE_URL="http://127.0.0.1:8081/API/";
+const BASE_URL="http://192.168.0.100:8081/API/";
 export const HTTP_URL_API={
     USER_LOGIN:BASE_URL+'USER/Login',
     USER_REGISTER:BASE_URL+'USER/Register',

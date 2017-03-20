@@ -1,4 +1,4 @@
-export const Swipers=[{"url":"#","img":"http://localhost:8081/Areas/Wap/Content/images/home/banner2.png"},{"url":"#","img":"http://localhost:8081/Areas/Wap/Content/images/home/banner1.png"}]
+export const Swipers=[{"url":"#","img":"http://192.168.0.100:8081/Areas/Wap/Content/images/home/banner2.png"},{"url":"#","img":"http://192.168.0.100:8081/Areas/Wap/Content/images/home/banner1.png"}]
 export const Agents=[{ "name": "馨儿点卡", "qq": "2466666681", "remark": "热情服务 全年无休" },{ "name": "金银汇", "qq": "2466666685", "remark": "选择财神 一路好运", "logo": 1 },
 { "name": "鑫旺点卡", "qq": "2477777718", "remark": "大额交易 安全无忧" },{ "name": "小牛点卡", "qq": "2477777728", "remark": "小牛点卡 牛气冲天", "logo": 2 },
 { "name": "富邦点卡", "qq": "1507764575", "remark": "富邦点卡 财运亨通", "logo": 1 },{ "name": "老字号点卡", "qq": "12858887", "remark": "老字号 老品牌 值得信赖", "logo": 2 }]

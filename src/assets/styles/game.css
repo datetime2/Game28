@@ -1,17 +1,23 @@
-.gamediv{margin-top:.7rem;}
-.gamediv ul,.gamediv ul li{padding:0;margin:0}
-.gclass{width:97%;border-radius:10px;background-color:#fff;margin:2% auto 0%;padding:0 0 3% 0}
-.bc{border-bottom:1px solid #ccc;font-size:130%;padding:1% 3%}
-.gamediv .gc li{border-radius:5px;margin:2% 1% 0% 1.8%;text-align:center;padding:1%;width:20%;height:150%;line-height:150%;list-style:none;float:left;}
-.gamediv .gc li a{color:#fff}
-.gamediv .g1 li{background-color:#F05550}
-.gamediv .g1 .bc{color:#F05550}
-.gamediv .g2 li{background-color:#23AEE5}
-.gamediv .g2 .bc{color:#23AEE5}
-.gamediv .g3 li{background-color:#FFAB10}
-.gamediv .g3 .bc{color:#FFAB10}
-.gamediv .g4 li{background-color:#B28AD1}
-.gamediv .g4 .bc{color:#B28AD1}
-.gamediv .g5 li{background-color:#E062A9}
-.gamediv .g5 .bc{color:#E062A9}
-.clear{clear:both}
+.menudiv2{float:left;width:100%;background:#4F1511}
+.menudiv2 ul{margin:3% 0 7% 1%;padding:0 0 2% 1%}
+.menudiv2 li{float:left;margin-right:1%;background-image:url(../../assets/images/game/btn_topyellow.png);background-position:center;background-repeat:no-repeat;padding:.2rem .3rem;border-radius:5px;line-height:140%;height:140%;margin-bottom:2%;list-style:none}
+.menudiv2 li a{color:#4F1511;font-size:.85rem}
+.menudiv2 .on{color:#ff0000}
+.rl{float:left;width:100%;height:100%;margin:0 0.5% 0 0;background-image:url(../../assets/images/game/top_backgroup.jpg);background-position:center;background-repeat:no-repeat;background-size: 100%, 100%;}
+.div_1{position:relative;height:100%}
+.head_div{width:15%;text-align:center;float:left;padding:1%}
+.info_div{font-size:.85rem;font-family:黑体;float:left;height:90%;line-height:90%;color:#ffffff;width:40%}
+.info_div p{height:20%}
+.info_div{font-size:.85rem;font-family:黑体;float:left;height:90%;line-height:90%;color:#ffffff;width:40%}
+.info_div p{height:20%}
+.div_2,.div_3{clear:both}
+.div_2 ul,.div_3 ul{padding:0 1% 0 1%;margin:2%;font-size:.7rem;color:#8998bf}
+.div_2 ul li{height:10%;list-style:none;}
+.div_3 ul li i,.div_2 ul li i,#liTimer i{font-size:.85rem;color:#e64047;padding:0 3px;font-style:normal}
+.div_2 ul li,.div_3 ul li{float:left;list-style:none;}
+.table{float:left;width:100%;padding:0}
+.bordered{background:#FFF;color:#555555;font-size:.6rem;}
+table th{background:#e93f40;color:#FFF}
+table td{border:1px solid #ccc;border-top:none;border-left:none}
+.pagetable{font-family:"Microsoft Yahei",Georgia,"Times New Roman",Times,serif;margin-top:2%;margin-bottom:2%;text-align:center}
+.Paging{font-size:.75rem;margin:0;padding:0;vertical-align:middle;width:100%}

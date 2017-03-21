@@ -201,7 +201,7 @@ data(){
 		currentGame:{},
 		userBet:{},
 		page:1,
-		currentGameTitle:''
+		currentGameTitle:'第<i> 813572 </i>期 还有<em> 197 </em>秒停止下注!'
 	}
 },	
 created () {
@@ -235,24 +235,37 @@ methods:{
 			s:20
 		}
         Indicator.open()
-		httpGet(HTTP_URL_API.GAME_DATALIST,data).then((res)=>{
+		httpGet(HTTP_URL_API.GAME_DATALIST,data)
+		.then((res)=>{
 			Indicator.close()
 			if(res){
 				this.gameList=res.data.Game.List
 				this.userBet=res.data.Game.User
 				this.currentGame=res.data.Game.Current
 			}
-		}).then(()=>{
-			this.timerCurrent()
+		}).then(()=>
+		{
+			let stopSec=this.currentGame.StopSec,lotterySec=this.currentGame.KjSec,currentTermNo=this.currentGame.TermNo
+			setInterval(function(){
+                if (lotterySec <= 0) {
+                    if (lotterySec <= -3) 
+						this.getGameList(1)
+                    else 
+						this.currentGameTitle='第<i> ' + currentTermNo + ' </i>期 正在开奖，请稍后!';
+                    lotterySec--
+                } else {
+                    if (stopSec > 0) 
+						this.currentGameTitle='第<i> ' + currentTermNo + ' </i>期 还有<em> ' + stopSec + ' </em>秒停止下注!';
+                    else 
+						this.currentGameTitle='第<i> ' + currentTermNo + ' </i>期 停止下注，还有<em> ' + lotterySec + ' </em>秒开奖!';
+                    lotterySec--
+                    stopSec--
+                }				
+			},1000)
 		})
 	},
 	toBet(){
 		Toast('闪开 我要投注了')
-	},
-	timerCurrent(){
-		timerId = setInterval(function(){
-			Toast('闪开 我定时自爆了')
-		}, 4000);
 	}
   },
   components: {HeadNav,FootNav}

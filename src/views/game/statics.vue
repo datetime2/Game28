@@ -49,6 +49,7 @@
           </ul>
         </div>
         <div class="statdiv">
+        <transition name="fade">
             <table class="table_list" width="100%">
               <tbody>
                 <tr>
@@ -81,6 +82,7 @@
                 </tr>
               </tbody>
             </table>
+            </transition>
         </div>        
     </div>
     <FootNav></FootNav>

@@ -212,7 +212,7 @@ computed: mapState({
 	title:state=>state.title
   }), 
 mounted(){
-	this.getGameList(this.page)
+	this.getGameList(this.page)	
 },   
 methods:{
     ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT']),
@@ -243,29 +243,30 @@ methods:{
 				this.userBet=res.data.Game.User
 				this.currentGame=res.data.Game.Current
 			}
-		}).then(()=>
-		{
-			let stopSec=this.currentGame.StopSec,lotterySec=this.currentGame.KjSec,currentTermNo=this.currentGame.TermNo
-			setInterval(function(){
-                if (lotterySec <= 0) {
-                    if (lotterySec <= -3) 
-						this.getGameList(1)
-                    else 
-						this.currentGameTitle='第<i> ' + currentTermNo + ' </i>期 正在开奖，请稍后!';
-                    lotterySec--
-                } else {
-                    if (stopSec > 0) 
-						this.currentGameTitle='第<i> ' + currentTermNo + ' </i>期 还有<em> ' + stopSec + ' </em>秒停止下注!';
-                    else 
-						this.currentGameTitle='第<i> ' + currentTermNo + ' </i>期 停止下注，还有<em> ' + lotterySec + ' </em>秒开奖!';
-                    lotterySec--
-                    stopSec--
-                }				
-			},1000)
+		}).then(()=>{
+			this.timerEvent()
 		})
 	},
 	toBet(){
 		Toast('闪开 我要投注了')
+	},
+	timerEvent(){
+        let stopSec=parseInt(this.currentGame.StopSec),lotterySec=parseInt(this.currentGame.KjSec),currentTermNo=this.currentGame.TermNo
+        if (lotterySec <= 0) {
+           if (lotterySec <= -3) 
+               this.getGameList(1)
+           else 
+                this.currentGameTitle='第<i> ' + currentTermNo + ' </i>期 正在开奖，请稍后!'
+                lotterySec--                                            
+        } else {
+           if (stopSec > 0) 
+              this.currentGameTitle='第<i> ' + currentTermNo + ' </i>期 还有<em> ' + stopSec + ' </em>秒停止下注!'
+            else 
+              this.currentGameTitle='第<i> ' + currentTermNo + ' </i>期 停止下注，还有<em> ' + lotterySec + ' </em>秒开奖!'
+            lotterySec--
+            stopSec--                                             
+        }        
+        setTimeout(this.timerEvent, 1000)        	
 	}
   },
   components: {HeadNav,FootNav}

@@ -109,14 +109,14 @@
 						</router-link>
 					</li>
 					<li>
-						<router-link :to="{name:'detail',params:{type:1,code:1001,text:'北京16'}}">
+						<router-link :to="{name:'detail',params:{type:1,code:1002,text:'北京16'}}">
 							<img width="100%" src="../assets/images/bj16.png" />
 							<p>
 							</p>
 						</router-link>
 					</li>
 					<li>
-						<router-link :to="{name:'detail',params:{type:1,code:1002,text:'北京28'}}">
+						<router-link :to="{name:'detail',params:{type:1,code:1001,text:'北京28'}}">
 							<img width="100%" src="../assets/images/bj28.png" />
 							<p>
 							</p>

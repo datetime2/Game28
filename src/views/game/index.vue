@@ -63,7 +63,7 @@
                     </li>
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:1,code:1001,text:'北京16'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:1002,text:'北京16'}}">
                                 <div class="intro">
                                     <div class="name">北京16</div>
                                 </div>

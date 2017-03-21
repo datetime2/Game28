@@ -92,7 +92,7 @@ import FootNav from '../../components/footNav'
 import HeadNav from '../../components/topNav'
 import {HTTP_URL_API} from '../../data/api'
 import {httpPost,createSign,toThousands} from '../../data/util'
-import { Toast } from 'mint-ui'
+import { Toast,Indicator} from 'mint-ui'
 export default{
 data(){
   return{
@@ -123,7 +123,9 @@ methods:{
             days:3
         }
         let sign=createSign(data)
+        Indicator.open()
         httpPost(HTTP_URL_API.GAME_STATICS,sign).then((res)=>{
+            Indicator.close()
             if(res && res.data.code==0){
                 this.staticList=res.data.data
             }

@@ -1,7 +1,8 @@
 <template>
-  <div>
-    <HeadNav></HeadNav>
-    <div class="index-container" id="index-container">
+<div>
+	<HeadNav>
+	</HeadNav>
+	<div class="index-container" id="index-container">
 		<div class="menudiv2">
 			<ul>
 				<li>
@@ -12,7 +13,7 @@
 					</router-link>
 				</li>
 				<li>
-			<router-link :to="{name:'record',params:{type:type,text:title}}">
+					<router-link :to="{name:'record',params:{type:type,text:title}}">
 						<span class="">
 							记录
 						</span>
@@ -82,35 +83,12 @@
 				</div>
 				<div class="div_2">
 					<ul>
-						<li>
-							今日｜盈亏：
-							<i>
-								0
-							</i>
-							，参与：
-							<i>
-								0
-							</i>
-							，胜率：
-							<i>
-								0.0%
-							</i>
-						</li>
+						<li v-show="userBet">今日｜盈亏:<i>{{Thousands(userBet.Shares)}}</i>,参与:<i>{{userBet.Periods}}</i>,胜率:<i>{{userBet.Rate+'%'}}</i></li>
 					</ul>
 				</div>
 				<div class="div_3">
 					<ul>
-						<li id="liTimer">
-							第
-							<i>
-								813322
-							</i>
-							期 还有
-							<em>
-								190
-							</em>
-							秒停止下注!
-						</li>
+						<li id="liTimer" v-html="currentGameTitle"></li>
 					</ul>
 				</div>
 			</div>
@@ -118,10 +96,10 @@
 				<table class="bordered">
 					<tbody>
 						<tr>
-							<th width="17%">
+							<th width="20%">
 								期号
 							</th>
-							<th width="28%" style="color:#eaff01">
+							<th width="25%" style="color:#eaff01">
 								开奖结果
 							</th>
 							<th width="20%">
@@ -134,49 +112,47 @@
 								<br>
 								投注额
 							</th>
-							<th width="15%" >
+							<th width="15%">
 								投注
 							</th>
 						</tr>
 					</tbody>
 					<tbody>
-						<tr v-for="game in gameList" v-show="!gameList">
+						<tr v-for="game in gameList" v-if="gameList">
 							<td style="border-left:1px solid #ccc">
 								<span class="qihao">
-									813325
+									{{game.TermNo}}
 								</span>
 								<br>
 								<span class="kjtime">
-									03-20 11:15
+									{{DateFormat(game.LotteryTime,'MM-dd hh:mm:ss')}}
 								</span>
 							</td>
-							<td>
+							<td class="td-result" v-html="game.ResultTd">
 							</td>
 							<td align="right" class="rpad">
-								0
-								<br>
+									{{game.SystemBetTotal}}
+								<br/>
 								<span class="zjrnum">
-									0
+									{{game.WinNumber}}
 								</span>
 								/
 								<span class="tznum">
-									0
+									{{game.BetNumber}}
 								</span>
 							</td>
-							<td align="right" class="rpad">
+							<td align="right" class="rpad" v-html="game.AmountTd">
 							</td>
 							<td>
-								<span id="scur_813325">
-									<a href="javascript:void(0)" onclick="toPress(813325)">
-										<img src="../../assets/images/game/tz.png" width="90%">
-									</a>
-								</span>
+							  <img src="../../assets/images/game/js.png" width="90%" v-if="game.Lottery==0">
+							  <img src="../../assets/images/game/kj.png" width="90%" v-else-if="game.Lottery==1">
+							  <a href="javascript:void(0)" @click="toBet" v-else><img src="../../assets/images/game/tz.png" width="90%"></a>
 							</td>
 						</tr>
-						<tr>
-						<td colspan="5">
-						暂无数据
-						</td>
+						<tr v-else>
+							<td colspan="5">
+								暂无数据
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -204,21 +180,28 @@
 				</div>
 			</div>
 		</div>
-    </div>
-    <FootNav></FootNav>
-  </div>
+	</div>
+	<FootNav>
+	</FootNav>
+</div>
 </template>
 <script>
 import { mapState,mapMutations } from 'vuex'
 import FootNav from '../../components/footNav'
 import HeadNav from '../../components/topNav'
-import{toThousands,httpPost,httpGet,createSign} from '../../data/util'
+import{toThousands,httpPost,httpGet,createSign,dateFormat} from '../../data/util'
 import{HTTP_URL_API} from '../../data/api'
+import { Toast,Indicator} from 'mint-ui'
 export default{
 data(){
 	return{
 		type:this.$route.params['type'],
-		gameList:[]
+		code:this.$route.params['code'],
+		gameList:[],
+		currentGame:{},
+		userBet:{},
+		page:1,
+		currentGameTitle:''
 	}
 },	
 created () {
@@ -229,7 +212,7 @@ computed: mapState({
 	title:state=>state.title
   }), 
 mounted(){
-	this.getGameList()
+	this.getGameList(this.page)
 },   
 methods:{
     ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT']),
@@ -240,14 +223,42 @@ methods:{
 	Thousands(val){
 		return toThousands(val)
 	},
-	getGameList(){
-
+	DateFormat(val,format){
+		return dateFormat(val,format)
+	},
+	getGameList(__page){
+		let data={
+			c:this.code,
+			t:this.type,
+			userId:this.userInfo.userId,
+			p:__page,
+			s:20
+		}
+        Indicator.open()
+		httpGet(HTTP_URL_API.GAME_DATALIST,data).then((res)=>{
+			Indicator.close()
+			if(res){
+				this.gameList=res.data.Game.List
+				this.userBet=res.data.Game.User
+				this.currentGame=res.data.Game.Current
+			}
+		}).then(()=>{
+			this.timerCurrent()
+		})
+	},
+	toBet(){
+		Toast('闪开 我要投注了')
+	},
+	timerCurrent(){
+		timerId = setInterval(function(){
+			Toast('闪开 我定时自爆了')
+		}, 4000);
 	}
   },
   components: {HeadNav,FootNav}
 }
 </script>
-<style scoped>
+<style>
 .menudiv2{float:left;width:100%;background:#4F1511}
 .menudiv2 ul{margin:3% 0 7% 1%;padding:0 0 2% 1%}
 .menudiv2 li{float:left;margin-right:1%;background-image:url(../../assets/images/game/btn_topyellow.png);background-position:center;background-repeat:no-repeat;padding:.2rem .3rem;border-radius:5px;line-height:140%;height:140%;margin-bottom:2%;list-style:none}
@@ -270,7 +281,7 @@ methods:{
 table th{background:#e93f40;color:#FFF}
 table td{border:1px solid #ccc;border-top:none;border-left:none}
 .pagetable{font-family:"Microsoft Yahei",Georgia,"Times New Roman",Times,serif;margin-top:2%;margin-bottom:2%;text-align:center}
-.qihao{font-size:120%;color:#f10808}
+.qihao{font-size:.85rem;color:#f10808}
 .Paging{font-size:.75rem;margin:0;padding:0;vertical-align:middle;width:100%}
 .preimg{padding-right:5px}
 .pageindex{border-radius:50%;-moz-border-radius:50%;-webkit-border-radius:50%;text-align:center;width:23px;height:23px;display:inline-block;margin:0;padding:0;color:#FFF;background-image:-moz-linear-gradient(top,#64b7c5,#52a5b5);background-image:-webkit-gradient(linear,left top,left bottom,from(#64b7c5),to(#52a5b5));filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#64b7c5,endColorstr=#52a5b5);-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#64b7c5,endColorstr=#52a5b5)";-moz-box-shadow:1px 1px 1px #012126 inset;-webkit-box-shadow:1px 1px 1px #012126 inset;box-shadow:1px 1px 1px #012126 inset}
@@ -279,4 +290,6 @@ table td{border:1px solid #ccc;border-top:none;border-left:none}
 .kj_r{background:#e64047 none repeat scroll 0 0;border-radius:50%;-moz-border-radius:50%;-webkit-border-radius:50%;color:#fff;display:block;font-weight:bold;text-align:center;width:20px;margin-left:1%}
 .kj_l{margin-left:8%}
 .kj_l,.kj_r{float:left;height:20px;line-height:20px}
+.zjrnum,.win1{color:#ff0000;font-size:.85rem}
+.tznum,.lose1{color:#17bd4d;font-size:.75rem}
 </style>

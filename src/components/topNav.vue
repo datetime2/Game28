@@ -21,6 +21,6 @@ export default{
   }
 }
 </script>
-<style>
+<style scoped>
 .mint-header{background-image: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#e7e7e7));font-size:1.2rem !important;color:#7a8096 !important;background-color:#fff;font-weight: bold !important;}
 </style>

@@ -109,35 +109,35 @@
 						</router-link>
 					</li>
 					<li>
-						<router-link :to="{name:'detail',params:{type:'bj16',text:'北京16'}}">
+						<router-link :to="{name:'detail',params:{type:1,code:1001,text:'北京16'}}">
 							<img width="100%" src="../assets/images/bj16.png" />
 							<p>
 							</p>
 						</router-link>
 					</li>
 					<li>
-						<router-link :to="{name:'detail',params:{type:'bj28',text:'北京28'}}">
+						<router-link :to="{name:'detail',params:{type:1,code:1002,text:'北京28'}}">
 							<img width="100%" src="../assets/images/bj28.png" />
 							<p>
 							</p>
 						</router-link>
 					</li>
 					<li>
-						<router-link :to="{name:'detail',params:{type:'pk22',text:'PK22'}}">
+						<router-link :to="{name:'detail',params:{type:1,code:1001,text:'PK22'}}">
 							<img width="100%" src="../assets/images/pk22.png" />
 							<p>
 							</p>
 						</router-link>
 					</li>
 					<li>
-						<router-link :to="{name:'detail',params:{type:'pkgj',text:'PK冠军'}}">
+						<router-link :to="{name:'detail',params:{type:1,code:1001,text:'PK冠军'}}">
 							<img width="100%" src="../assets/images/pkgj.png" />
 							<p>
 							</p>
 						</router-link>
 					</li>
 					<li>
-						<router-link :to="{name:'detail',params:{type:'pk10',text:'PK10'}}">
+						<router-link :to="{name:'detail',params:{type:1,code:1001,text:'PK10'}}">
 							<img width="100%" src="../assets/images/pk10.png" />
 							<p>
 							</p>

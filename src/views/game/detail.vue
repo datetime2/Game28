@@ -88,7 +88,7 @@
 				</div>
 				<div class="div_3">
 					<ul>
-						<li id="liTimer" v-html="currentGameTitle"></li>
+						<li id="liTimer" v-html="currentGameTimer"></li>
 					</ul>
 				</div>
 			</div>
@@ -201,7 +201,8 @@ data(){
 		currentGame:{},
 		userBet:{},
 		page:1,
-		currentGameTitle:'第<i> 813572 </i>期 还有<em> 197 </em>秒停止下注!'
+		currentGameTimer:'第<i> 813592 </i>期 还有<em> 182 </em>秒停止下注!',
+		interTimer:''
 	}
 },	
 created () {
@@ -212,7 +213,7 @@ computed: mapState({
 	title:state=>state.title
   }), 
 mounted(){
-	this.getGameList(this.page)	
+	this.getGameList(this.page)		
 },   
 methods:{
     ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT']),
@@ -244,30 +245,44 @@ methods:{
 				this.currentGame=res.data.Game.Current
 			}
 		}).then(()=>{
-			this.timerEvent()
+			if(this.currentGame){
+				this.interTimer = setInterval(()=>{
+					this.timerEvent()
+				},1000)
+			}
 		})
 	},
 	toBet(){
 		Toast('闪开 我要投注了')
 	},
 	timerEvent(){
-        let stopSec=parseInt(this.currentGame.StopSec),lotterySec=parseInt(this.currentGame.KjSec),currentTermNo=this.currentGame.TermNo
-        if (lotterySec <= 0) {
+        let stopSec=parseInt(this.currentGame.StopSec),
+			lotterySec=parseInt(this.currentGame.KjSec),
+			currentTermNo=this.currentGame.TermNo
+		if (lotterySec <= 0) {
            if (lotterySec <= -3) 
                this.getGameList(1)
            else 
-                this.currentGameTitle='第<i> ' + currentTermNo + ' </i>期 正在开奖，请稍后!'
+                this.currentGameTimer='第<i> ' + currentTermNo + ' </i>期 正在开奖，请稍后!'
                 lotterySec--                                            
-        } else {
+        }else{
            if (stopSec > 0) 
-              this.currentGameTitle='第<i> ' + currentTermNo + ' </i>期 还有<em> ' + stopSec + ' </em>秒停止下注!'
+              this.currentGameTimer='第<i> ' + currentTermNo + ' </i>期 还有<em> ' + stopSec + ' </em>秒停止下注!'
             else 
-              this.currentGameTitle='第<i> ' + currentTermNo + ' </i>期 停止下注，还有<em> ' + lotterySec + ' </em>秒开奖!'
+              this.currentGameTimer='第<i> ' + currentTermNo + ' </i>期 停止下注，还有<em> ' + lotterySec + ' </em>秒开奖!'
             lotterySec--
             stopSec--                                             
-        }        
-        setTimeout(this.timerEvent, 1000)        	
+        }
 	}
+  },
+  watch:{
+	  currentGameTimer:{
+          handler:(val,oldVal)=>
+		  {
+			this.currentGameTimer=val
+          },
+          deep:true      
+      }
   },
   components: {HeadNav,FootNav}
 }

@@ -83,7 +83,7 @@
 				</div>
 				<div class="div_2">
 					<ul>
-						<li v-show="userBet">今日｜盈亏:<i>{{Thousands(userBet.Shares)}}</i>,参与:<i>{{userBet.Periods}}</i>,胜率:<i>{{userBet.Rate+'%'}}</i></li>
+						<li>今日｜盈亏:<i>{{Thousands(userBet.Shares)}}</i>,参与:<i>{{userBet.Periods}}</i>,胜率:<i>{{userBet.Rate+'%'}}</i></li>
 					</ul>
 				</div>
 				<div class="div_3">
@@ -144,9 +144,11 @@
 							<td align="right" class="rpad" v-html="game.AmountTd">
 							</td>
 							<td>
-							  <img src="../../assets/images/game/js.png" width="90%" v-if="game.Lottery==0">
-							  <img src="../../assets/images/game/kj.png" width="90%" v-else-if="game.Lottery==1">
-							  <a href="javascript:void(0)" @click="toBet" v-else><img src="../../assets/images/game/tz.png" width="90%"></a>
+							<span :id="game.TermNo">
+								<img src="../../assets/images/game/js.png" width="90%" v-if="game.Lottery==0">
+								<img src="../../assets/images/game/kj.png" width="90%" v-else-if="game.Lottery==1">
+								<a href="javascript:void(0)" @click="toBet" v-else><img src="../../assets/images/game/tz.png" width="90%"></a>
+							  </span>
 							</td>
 						</tr>
 						<tr v-else>
@@ -201,7 +203,7 @@ data(){
 		currentGame:{},
 		userBet:{},
 		page:1,
-		currentGameTimer:'第<i> 813592 </i>期 还有<em> 182 </em>秒停止下注!',
+		currentGameTimer:'第<i> 000000 </i>期 还有<em> 000 </em>秒停止下注!',
 		interTimer:''
 	}
 },	
@@ -213,7 +215,7 @@ computed: mapState({
 	title:state=>state.title
   }), 
 mounted(){
-	this.getGameList(this.page)		
+	this.getGameList(this.page)			
 },   
 methods:{
     ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT']),
@@ -239,50 +241,47 @@ methods:{
 		httpGet(HTTP_URL_API.GAME_DATALIST,data)
 		.then((res)=>{
 			Indicator.close()
+			clearInterval(this.interTimer)
 			if(res){
 				this.gameList=res.data.Game.List
 				this.userBet=res.data.Game.User
 				this.currentGame=res.data.Game.Current
 			}
 		}).then(()=>{
-			if(this.currentGame){
-				this.interTimer = setInterval(()=>{
-					this.timerEvent()
-				},1000)
-			}
+			let stopSec=parseInt(this.currentGame.StopSec),
+			lotterySec=parseInt(this.currentGame.KjSec),
+			currentTermNo=this.currentGame.TermNo
+			this.interTimer=setInterval(()=>{
+				if (lotterySec <= 0) {
+                    if (lotterySec == -2) {
+                        this.currentGameTimer='Loading......'
+                        this.getGameList(1)
+                    } else if (lotterySec < -2 && Math.abs(lotterySec) % 3 == 0) {
+                        this.currentGameTimer='Loading......'
+                        this.getGameList(1)
+                    } else {
+                        this.currentGameTimer='第<i> ' + currentTermNo + ' </i>期 正在开奖,请稍后!'
+                    }
+                    lotterySec--
+                } else {
+                    if (stopSec == 0) {
+						var dom=document.getElementById(currentTermNo)
+						dom.innerHTML='<img src="../../assets/images/game/kj.png" width="90%"/>'
+                    }
+                    if (stopSec > 0) {
+                        this.currentGameTimer='第<i> ' + currentTermNo + ' </i>期 还有<em> ' + stopSec + ' </em>秒停止下注!'
+                    } else {
+                        this.currentGameTimer='第<i> ' + currentTermNo + ' </i>期 停止下注，还有<em> ' + lotterySec + ' </em>秒开奖!'
+                    }
+                    lotterySec--;
+                    stopSec--;
+                }
+			},1000)	
 		})
 	},
 	toBet(){
 		Toast('闪开 我要投注了')
-	},
-	timerEvent(){
-        let stopSec=parseInt(this.currentGame.StopSec),
-			lotterySec=parseInt(this.currentGame.KjSec),
-			currentTermNo=this.currentGame.TermNo
-		if (lotterySec <= 0) {
-           if (lotterySec <= -3) 
-               this.getGameList(1)
-           else 
-                this.currentGameTimer='第<i> ' + currentTermNo + ' </i>期 正在开奖，请稍后!'
-                lotterySec--                                            
-        }else{
-           if (stopSec > 0) 
-              this.currentGameTimer='第<i> ' + currentTermNo + ' </i>期 还有<em> ' + stopSec + ' </em>秒停止下注!'
-            else 
-              this.currentGameTimer='第<i> ' + currentTermNo + ' </i>期 停止下注，还有<em> ' + lotterySec + ' </em>秒开奖!'
-            lotterySec--
-            stopSec--                                             
-        }
 	}
-  },
-  watch:{
-	  currentGameTimer:{
-          handler:(val,oldVal)=>
-		  {
-			this.currentGameTimer=val
-          },
-          deep:true      
-      }
   },
   components: {HeadNav,FootNav}
 }

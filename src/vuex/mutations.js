@@ -4,6 +4,7 @@ const USER_LOGIN = 'USER_LOGIN'
 const USER_LOGOUT = 'USER_LOGOUT'
 const USER_REGISTER = 'USER_REGISTER'
 const USER_CHANGE='USER_CHANGE'
+const GLOBAL_TIMER='GLOBAL_TIMER'
 export default {
     [CHANGE_TITLE](state, title) {
         state.title = title;
@@ -25,5 +26,8 @@ export default {
     [USER_CHANGE](state,user){
         window.localStorage.setItem('userStorage', JSON.stringify(user))
         state.userInfo = user;
+    },
+    [GLOBAL_TIMER](state,timerId){
+        state.globalTimer=timerId
     }
 }

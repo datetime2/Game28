@@ -7,7 +7,8 @@ const state = {
     title:'好彩投28 VUE2',
     showBackBut:true,
     userInfo:JSON.parse(window.localStorage.getItem('userStorage')) || {},
-    gameCode:''
+    gameCode:'',
+    globalTimer:''
 }
 export default new Vuex.Store({
     state,

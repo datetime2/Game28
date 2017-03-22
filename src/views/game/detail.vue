@@ -144,7 +144,7 @@
 							<td align="right" class="rpad" v-html="game.AmountTd">
 							</td>
 							<td>
-							<span :id="game.TermNo">
+							 <span :id="game.TermNo">
 								<img src="../../assets/images/game/js.png" width="90%" v-if="game.Lottery==0">
 								<img src="../../assets/images/game/kj.png" width="90%" v-else-if="game.Lottery==1">
 								<a href="javascript:void(0)" @click="toBet" v-else><img src="../../assets/images/game/tz.png" width="90%"></a>
@@ -193,7 +193,7 @@ import FootNav from '../../components/footNav'
 import HeadNav from '../../components/topNav'
 import{toThousands,httpPost,httpGet,createSign,dateFormat} from '../../data/util'
 import{HTTP_URL_API} from '../../data/api'
-import { Toast,Indicator} from 'mint-ui'
+import { Toast,Indicator,MessageBox} from 'mint-ui'
 export default{
 data(){
 	return{
@@ -212,13 +212,14 @@ created () {
   },     
 computed: mapState({
     userInfo: state => state.userInfo,
-	title:state=>state.title
+	title:state=>state.title,
+	globalTimer:state=>state.globalTimer
   }), 
 mounted(){
 	this.getGameList(this.page)			
 },   
 methods:{
-    ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT']),
+    ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT','GLOBAL_TIMER','USER_CHANGE']),
     setTitle(){
         this.CHANGE_TITLE(this.$route.params['text'])
         this.SHOW_BACK_BUT(true)
@@ -241,42 +242,44 @@ methods:{
 		httpGet(HTTP_URL_API.GAME_DATALIST,data)
 		.then((res)=>{
 			Indicator.close()
-			clearInterval(this.interTimer)
 			if(res){
 				this.gameList=res.data.Game.List
 				this.userBet=res.data.Game.User
 				this.currentGame=res.data.Game.Current
 			}
-		}).then(()=>{
-			let stopSec=parseInt(this.currentGame.StopSec),
-			lotterySec=parseInt(this.currentGame.KjSec),
-			currentTermNo=this.currentGame.TermNo
-			this.interTimer=setInterval(()=>{
-				if (lotterySec <= 0) {
-                    if (lotterySec == -2) {
-                        this.currentGameTimer='Loading......'
-                        this.getGameList(1)
-                    } else if (lotterySec < -2 && Math.abs(lotterySec) % 3 == 0) {
-                        this.currentGameTimer='Loading......'
-                        this.getGameList(1)
-                    } else {
-                        this.currentGameTimer='第<i> ' + currentTermNo + ' </i>期 正在开奖,请稍后!'
-                    }
-                    lotterySec--
-                } else {
-                    if (stopSec == 0) {
-						var dom=document.getElementById(currentTermNo)
-						dom.innerHTML='<img src="../../assets/images/game/kj.png" width="90%"/>'
-                    }
-                    if (stopSec > 0) {
-                        this.currentGameTimer='第<i> ' + currentTermNo + ' </i>期 还有<em> ' + stopSec + ' </em>秒停止下注!'
-                    } else {
-                        this.currentGameTimer='第<i> ' + currentTermNo + ' </i>期 停止下注，还有<em> ' + lotterySec + ' </em>秒开奖!'
-                    }
-                    lotterySec--;
-                    stopSec--;
-                }
-			},1000)	
+		})
+		.then(()=>{
+			let user={
+				userid:this.userInfo.userId,
+				ticket:this.userInfo.tikect,
+				lang:'cn'
+			}
+			httpPost(HTTP_URL_API.USER_INFOMATION,createSign(user)).then((res)=>{
+				if(res){
+					if(res.data.code==0){
+					let user ={
+                            userName: res.data.data.LoginName,
+                            nickName: res.data.data.NickName ? res.data.data.NickName : '',
+                            userId: res.data.data.Id,
+                            tikect: this.userInfo.tikect,
+                            amount: res.data.data.BalanceAmount,
+                            cellPhone:res.data.data.Phone,
+                            bankAmount:res.data.data.AccountAmount,
+                            email:res.data.data.email
+                        }
+						this.USER_CHANGE(user)
+					}
+					if(res.data.code==98){
+						let instance = Toast(res.data.errors)
+							setTimeout(() => {
+							instance.close()
+							this.$router.push({
+                    				name: 'login'
+                				})
+						}, 2000)
+					}
+				}
+			})
 		})
 	},
 	toBet(){

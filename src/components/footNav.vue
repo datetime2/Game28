@@ -43,3 +43,6 @@ methods: {
   }
 }
 </script>
+<style scoped>
+.mint-tab-item-label{color:#fff !important;}
+</style>

@@ -42,5 +42,8 @@ export default {
     },
     USER_CHANGE({commit},user){
         commit('USER_CHANGE',user)
+    },
+    GLOBAL_TIMER({commit},timerId){
+        commit('GLOBAL_TIMER',timerId)
     }
 }

@@ -39,7 +39,7 @@
         <mt-tab-container-item id="2">
           <div class="rankcontent" id="rankcontent1">
             <div class="title">
-              <img src="../assets/images/rankings/t1.png">
+              <img src="../assets/images/rankings/t2.png">
               <span>
                 荣耀冠军:{{topUser}}
               </span>
@@ -136,7 +136,7 @@ methods:{
           if(res){
             Indicator.close()
             this.rankList=res.data.Grid
-            this.topUser=res.data.Top
+            this.topUser=res.data.Grid[0].NickName
           }
       })
     },

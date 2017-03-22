@@ -17,7 +17,7 @@
               </span>
             </div>
             <ul>
-              <li v-for="(rank,index) in rankList" :class="{r1:index==0,r2:index==1,r3:index==2,r0:index!=0 || index !=1 || index!=2}">
+              <li v-for="(rank,index) in rankList" :class="{r1:index==0,r2:index==1,r3:index==2,r0:index!=0 && index !=1 && index!=2}">
                 <div class="l">
                   <img src="../assets/images/rankings/r1.png" v-if="index==0">
                   <img src="../assets/images/rankings/r2.png" v-else-if="index==1">
@@ -45,7 +45,7 @@
               </span>
             </div>
             <ul>
-              <li v-for="(rank,index) in rankList" :class="{r1:index==0,r2:index==1,r3:index==2,r0:index!=0 || index !=1 || index!=2}">
+              <li v-for="(rank,index) in rankList" :class="{r1:index==0,r2:index==1,r3:index==2,r0:index!=0 && index !=1 && index!=2}">
                 <div class="l">
                   <img src="../assets/images/rankings/r1.png" v-if="index==0">
                   <img src="../assets/images/rankings/r2.png" v-else-if="index==1">
@@ -73,7 +73,7 @@
               </span>
             </div>
             <ul>
-              <li v-for="(rank,index) in rankList" :class="{r1:index==0,r2:index==1,r3:index==2,r0:index!=0 || index !=1 || index!=2}">
+              <li v-for="(rank,index) in rankList" :class="{r1:index==0,r2:index==1,r3:index==2,r0:index!=0 && index !=1 && index!=2}">
                 <div class="l">
                   <img src="../assets/images/rankings/r1.png" v-if="index==0">
                   <img src="../assets/images/rankings/r2.png" v-else-if="index==1">

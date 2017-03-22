@@ -129,7 +129,7 @@ methods:{
       let rank={
         t:__tabs,
         p:1,
-        s:15
+        s:30
       }
       Indicator.open('加载中...')
       httpGet(HTTP_URL_API.USER_RANKING,rank).then((res)=>{

@@ -136,7 +136,7 @@ methods:{
           if(res){
             Indicator.close()
             this.rankList=res.data.Grid
-            this.topUser=res.data.Grid[0].NickName
+            this.topUser=res.data.Grid[0].NickName?res.data.Grid[0].NickName:res.data.Grid[0].UserName
           }
       })
     },

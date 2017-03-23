@@ -45,7 +45,7 @@ methods:{
       let data={
             nickname:this.nickName,
             email:typeof(this.email) == "undefined"?"":this.email,
-            ticket:this.$store.state.userInfo.tikect,
+            ticket:this.$store.state.userInfo.ticket,
             userid:this.$store.state.userInfo.userId,
             lang:'cn'
         }

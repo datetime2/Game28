@@ -22,7 +22,7 @@ export default {
                             userName: res.User.LoginName,
                             nickName: res.User.NickName ? res.User.NickName : '',
                             userId: res.User.Id,
-                            tikect: res.Ticket,
+                            ticket: res.Ticket,
                             amount: res.User.BalanceAmount,
                             cellPhone:res.User.Phone,
                             bankAmount:res.User.AccountAmount,

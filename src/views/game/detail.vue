@@ -251,7 +251,7 @@ methods:{
 		.then(()=>{
 			let user={
 				userid:this.userInfo.userId,
-				ticket:this.userInfo.tikect,
+				ticket:this.userInfo.ticket,
 				lang:'cn'
 			}
 			httpPost(HTTP_URL_API.USER_INFOMATION,createSign(user)).then((res)=>{
@@ -261,7 +261,7 @@ methods:{
                             userName: res.data.data.LoginName,
                             nickName: res.data.data.NickName ? res.data.data.NickName : '',
                             userId: res.data.data.Id,
-                            tikect: this.userInfo.tikect,
+                            ticket: this.userInfo.ticket,
                             amount: res.data.data.BalanceAmount,
                             cellPhone:res.data.data.Phone,
                             bankAmount:res.data.data.AccountAmount,

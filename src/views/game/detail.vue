@@ -147,7 +147,7 @@
 							 <span :id="game.TermNo">
 								<img src="../../assets/images/game/js.png" width="90%" v-if="game.Lottery==0">
 								<img src="../../assets/images/game/kj.png" width="90%" v-else-if="game.Lottery==1">
-								<a href="javascript:void(0)" @click="toBet" v-else><img src="../../assets/images/game/tz.png" width="90%"></a>
+								<a href="javascript:void(0)" @click="toBet(game.TermNo)" v-else><img src="../../assets/images/game/tz.png" width="90%"></a>
 							  </span>
 							</td>
 						</tr>
@@ -283,8 +283,14 @@ methods:{
 			})
 		})
 	},
-	toBet(){
-		Toast('闪开 我要投注了')
+	toBet(__termNum){
+		this.$router.push({name:'betinfo',params:{
+			code:this.code,
+			type:this.type,
+			text:this.$route.params['text'],
+			termno:__termNum
+		}})
+		Toast('闪开 我要投注了'+__termNum)
 	}
   },
   components: {HeadNav,FootNav}

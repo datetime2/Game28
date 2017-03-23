@@ -144,7 +144,7 @@
 						</router-link>
 					</li>
 					<li>
-						<router-link :to="{name:'detail',params:{type:'pklh',text:'PK龙虎'}}">
+						<router-link :to="{name:'detail',params:{type:1,code:5005,text:'PK龙虎'}}">
 							<img width="100%" src="../assets/images/pklh.png" />
 							<p>
 							</p>

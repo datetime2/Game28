@@ -32,11 +32,11 @@
                     </div>
                     <div class="line">
                     </div>
-                    <div class="gb_ico">
-                      <img src="../assets/images/activity/up.png" alt="" class="gb_active_upico">
+                    <div class="gb_ico" @click="foldDivEvent(index)">
+                      <img src="../assets/images/activity/up.png">
                     </div>
                   </div>
-                  <div class="bgcon" v-html="activity.Remark" style="display:none">
+                  <div class="bgcon" v-html="activity.Remark" style="display:none" v-show='index===tempIndex'>
                   </div>
                 </li>
             </ul>
@@ -65,11 +65,11 @@
                     </div>
                     <div class="line">
                     </div>
-                    <div class="gb_ico">
-                      <img src="../assets/images/activity/up.png" alt="" class="gb_active_upico">
+                    <div class="gb_ico" @click="foldDivEvent(index)">
+                      <img src="../assets/images/activity/up.png">
                     </div>
                   </div>
-                  <div class="bgcon" v-html="activity.Remark" style="display:none">
+                  <div class="bgcon" v-html="activity.Remark" style="display:none" v-show="index===tempIndex">
                   </div>
                 </li>
             </ul>
@@ -91,7 +91,8 @@ export default{
 data(){
     return {
         selected:'1',
-        activityList:[]
+        activityList:[],
+        tempIndex:-1
     }
 },    
 created () {
@@ -107,6 +108,7 @@ methods:{
         this.SHOW_BACK_BUT(true)
     },
     tabSelectEvent(__tabs){
+      this.tempIndex=-1
       this.selected=__tabs
         let actity={
           t:__tabs
@@ -121,7 +123,10 @@ methods:{
     },
     DateFormat(val,format){
       return dateFormat(val,format)
-    }    
+    },
+    foldDivEvent(__index){
+      this.tempIndex=__index//this.tempIndex==-1?__index:-1
+    }
   },
   components: {HeadNav,FootNav}
 }
@@ -151,6 +156,5 @@ methods:{
 .hddiv ul li .bg .rightdiv img{width:100%}
 .hddiv ul li .bg .line{border-bottom:1px dashed #c4c4c4;height:1px;width:100%;float:left}
 .hddiv ul li .bg .gb_ico{clear:both;text-align:center;padding:0;margin:0;padding-top:2%;padding-bottom:2%}
-.gb_active_upico{cursor:pointer}
 .hddiv ul li .bgcon{border:1px solid #aeaeae;border-radius:5px;background-color:#FFF;height:auto;padding:0.5%;margin-top:1%;float:left;width:97%;font-size:.75rem;}
 </style>

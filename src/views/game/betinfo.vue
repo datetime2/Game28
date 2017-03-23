@@ -115,16 +115,16 @@
                         <th width="30%">投注</th>
                         <th width="25%">倍数</th>
                     </tr>
-                    <tr v-for="rate in rateList">
+                    <tr v-for="(rate,index) in rateList">
                         <td align="center" style="border-left: 1px solid #ccc"><span class="num_1">{{rate.Num}}</span></td>
                         <td>{{rate.Odds}}</td>
-                        <td><input id="tbChk0" type="checkbox" name="tbChk" @click="chgRateCheckEvent(this, 'tbNum0')" class="chkRate"/></td>
-                        <td><input type="number" @blur="chgRateInputEvent(this, 'tbChk0')">
+                        <td><input :id="'tbChk'+index" type="checkbox" name="tbChk" @click="chgRateCheckEvent(this, 'tbNum'+index)" class="chkRate"/></td>
+                        <td><input :id="'tbNum'+index" type="number" @blur="chgRateInputEvent(this, 'tbChk'+index)">
                         </td>
                         <td class="bs">
-                            <button @click="chgRateEvent('tbNum0',0.5)" class="multiple">.5</button>
-                            <button @click="chgRateEvent('tbNum0',2)" class="multiple">2</button>
-                            <button @click="chgRateEvent('tbNum0',10)" class="multiple">10</button>
+                            <button @click="chgRateEvent('tbNum'+index,0.5)" class="multiple">.5</button>
+                            <button @click="chgRateEvent('tbNum'+index,2)" class="multiple">2</button>
+                            <button @click="chgRateEvent('tbNum'+index,10)" class="multiple">10</button>
                         </td>
                     </tr>
                 </tbody>
@@ -167,6 +167,8 @@ methods:{
         Toast('MLGB 让开 我要包场了')
     },
     chgRateEvent(__dom,__rate){
+        console.log(__dom)
+        console.log(__rate)
         Toast('MLGB 让开 我要加倍了')
     },
     chgAllRateEvent(__rate){

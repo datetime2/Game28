@@ -269,7 +269,7 @@ methods:{
                         }
 						this.USER_CHANGE(user)
 					}
-					if(res.data.code==98){
+					if(res.data.code==98 || res.data.code==99){
 						this.USER_LOGOUT()
 						let instance = Toast('登录信息已失效')
 							setTimeout(() => {

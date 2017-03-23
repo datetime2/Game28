@@ -45,7 +45,7 @@
                     </li>
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:1,code:1001,text:'蛋蛋36'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:1008,text:'蛋蛋36'}}">
                                 <div class="intro">
                                     <div class="name">蛋蛋36</div>
                                 </div>
@@ -72,7 +72,7 @@
                     </li>
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:1,code:1001,text:'北京36'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:1003,text:'北京36'}}">
                                 <div class="intro">
                                     <div class="name">北京36</div>
                                 </div>
@@ -89,7 +89,7 @@
                 <ul class="gc">
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:1,code:1001,text:'PK冠军'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:5001,text:'PK22'}}">
                                 <div class="intro">
                                     <div class="name">PK22</div>
                                 </div>
@@ -98,7 +98,7 @@
                     </li>
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:1,code:1001,text:'PK冠军'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:5002,text:'PK冠军'}}">
                                 <div class="intro">
                                     <div class="name">PK冠军</div>
                                 </div>
@@ -107,7 +107,7 @@
                     </li>
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:1,code:1001,text:'PK10'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:5003,text:'PK10'}}">
                                 <div class="intro">
                                     <div class="name">PK10</div>
                                 </div>
@@ -116,7 +116,7 @@
                     </li>
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:1,code:1001,text:'PK冠亚'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:5004,text:'PK冠亚'}}">
                                 <div class="intro">
                                     <div class="name">PK冠亚</div>
                                 </div>
@@ -125,7 +125,7 @@
                     </li>
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:1,code:1001,text:'PK龙虎'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:5005,text:'PK龙虎'}}">
                                 <div class="intro">
                                     <div class="name">PK龙虎</div>
                                 </div>
@@ -142,7 +142,7 @@
                 <ul class="gc">
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:1,code:1001,text:'加拿大28'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:2001,text:'加拿大28'}}">
                                 <div class="intro">
                                     <div class="name">加拿大28</div>
                                 </div>
@@ -151,7 +151,7 @@
                     </li>
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:1,code:1001,text:'加拿大16'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:2002,text:'加拿大16'}}">
                                 <div class="intro">
                                     <div class="name">加拿大16</div>
                                 </div>
@@ -160,7 +160,7 @@
                     </li>
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:1,code:1001,text:'加拿大11'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:2004,text:'加拿大11'}}">
                                 <div class="intro">
                                     <div class="name">加拿大11</div>
                                 </div>
@@ -169,7 +169,7 @@
                     </li>
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:1,code:1001,text:'加拿大36'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:2003,text:'加拿大36'}}">
                                 <div class="intro">
                                     <div class="name">加拿大36</div>
                                 </div>
@@ -178,7 +178,7 @@
                     </li>
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:1,code:1001,text:'加拿大10'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:2005,text:'加拿大10'}}">
                                 <div class="intro">
                                     <div class="name">加拿大10</div>
                                 </div>
@@ -187,7 +187,7 @@
                     </li>
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:1,code:1001,text:'加拿大外围'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:2009,text:'加拿大外围'}}">
                                 <div class="intro">
                                     <div class="name">加拿大外围</div>
                                 </div>
@@ -204,7 +204,7 @@
                 <ul class="gc">
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:1,code:1001,text:'韩国28'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:3001,text:'韩国28'}}">
                                 <div class="intro">
                                     <div class="name">韩国28</div>
                                 </div>
@@ -213,7 +213,7 @@
                     </li>
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:1,code:1001,text:'韩国16'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:3002,text:'韩国16'}}">
                                 <div class="intro">
                                     <div class="name">韩国16</div>
                                 </div>
@@ -222,7 +222,7 @@
                     </li>
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:1,code:1001,text:'韩国36'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:3003,text:'韩国36'}}">
                                 <div class="intro">
                                     <div class="name">韩国36</div>
                                 </div>
@@ -231,7 +231,7 @@
                     </li>
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:1,code:1001,text:'韩国11'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:3004,text:'韩国11'}}">
                                 <div class="intro">
                                     <div class="name">韩国11</div>
                                 </div>
@@ -240,7 +240,7 @@
                     </li>
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:1,code:1001,text:'韩国10'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:3005,text:'韩国10'}}">
                                 <div class="intro">
                                     <div class="name">韩国10</div>
                                 </div>
@@ -249,7 +249,7 @@
                     </li>
                     <li>
                         <div class="con">
-                            <router-link :to="{name:'detail',params:{type:1,code:1001,text:'韩国外围'}}">
+                            <router-link :to="{name:'detail',params:{type:1,code:3009,text:'韩国外围'}}">
                                 <div class="intro">
                                     <div class="name">韩国外围</div>
                                 </div>

@@ -33,7 +33,8 @@ data(){
     return {
         selected: 'index',
         gameColl:['detail','helper','model','record','statics','trend'],
-        userColl:['bank','card','information','lottery','modify','myreffer','operate','profit','ranking','reffer','salary','score','sign']
+        userColl:['bank','card','information','lottery','modify','myreffer','operate','profit','ranking','reffer','salary','score','sign'],
+        homeColl:['agent','activity','news']
     }
 },
 methods: {

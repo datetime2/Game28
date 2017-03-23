@@ -1,18 +1,20 @@
 import axios from 'axios'
 import { HTTP_URL_API } from '../data/api'
-import { Toast } from 'mint-ui'
+import { Toast,Indicator } from 'mint-ui'
 export default {
     CHANGE_TITLE({ commit }, title) {
         commit('CHANGE_TITLE', { title })
     },
     USER_LOGIN({ commit }, params) {
         return new Promise((resolve, reject) => {
+            Indicator.open('登录中...')
             axios.post(HTTP_URL_API.USER_LOGIN, params, {
                 headers:
                 {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             }).then(function (response) {
+                Indicator.close()
                 if (response.data.code == 0) {
                     var res = JSON.parse(response.data.data);
                     let user =

@@ -67,7 +67,7 @@
         <mt-tab-container-item id="3">
           <div class="rankcontent" id="rankcontent1">
             <div class="title">
-              <img src="../assets/images/rankings/t1.png">
+              <img src="../assets/images/rankings/t3.png">
               <span>
                 荣耀至尊:{{topUser}}
               </span>

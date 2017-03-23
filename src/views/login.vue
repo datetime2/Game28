@@ -24,7 +24,7 @@
 import { mapMutations,mapActions,mapStates } from 'vuex'
 import HeadNav from '../components/topNav'
 import {HTTP_URL_API} from '../data/api'
-import { Toast,Indicator} from 'mint-ui'
+import { Toast} from 'mint-ui'
 import md5 from 'md5'
 import axios from 'axios'
 export default{
@@ -58,9 +58,7 @@ methods:{
         data.push("username="+this.username.trim());
         data.push("password="+md5(this.password.trim()));
         data.push("rember="+this.isrember);            
-        Indicator.open()
         this.$store.dispatch('USER_LOGIN',data.join('&')).then((userInfo)=>{
-            Indicator.close()
             if(userInfo.userId){
                 let redirect = decodeURIComponent(this.$route.query.redirect || '/')
                 this.$router.push({

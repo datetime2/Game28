@@ -219,7 +219,7 @@ mounted(){
 	this.getGameList(this.page)			
 },   
 methods:{
-    ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT','GLOBAL_TIMER','USER_CHANGE']),
+    ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT','GLOBAL_TIMER','USER_CHANGE','USER_LOGOUT']),
     setTitle(){
         this.CHANGE_TITLE(this.$route.params['text'])
         this.SHOW_BACK_BUT(true)
@@ -270,7 +270,8 @@ methods:{
 						this.USER_CHANGE(user)
 					}
 					if(res.data.code==98){
-						let instance = Toast(res.data.errors)
+						this.USER_LOGOUT()
+						let instance = Toast('登录信息已失效')
 							setTimeout(() => {
 							instance.close()
 							this.$router.push({
@@ -289,7 +290,7 @@ methods:{
   components: {HeadNav,FootNav}
 }
 </script>
-<style>
+<style scoped>
 .menudiv2{float:left;width:100%;background:#4F1511}
 .menudiv2 ul{margin:3% 0 7% 1%;padding:0 0 2% 1%}
 .menudiv2 li{float:left;margin-right:1%;background-image:url(../../assets/images/game/btn_topyellow.png);background-position:center;background-repeat:no-repeat;padding:.2rem .3rem;border-radius:5px;line-height:140%;height:140%;margin-bottom:2%;list-style:none}

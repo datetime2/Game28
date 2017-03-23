@@ -12,7 +12,7 @@ export default new Router({
     { path: '/game/record/:type/:code/:text', name: 'record', component: require('../views/game/record'),meta: { requiresAuth: true }},
     { path: '/game/helper/:type/:code/:text', name: 'helper', component: require('../views/game/helper'),meta: { requiresAuth: true }},
     { path: '/game/model/:type/:code/:text', name: 'model', component: require('../views/game/model'),meta: { requiresAuth: true }},   
-    { path: '/game/betinfo/:type/:code/:text/:termno', name: 'betinfo', component: require('../views/game/betinfo'),meta: { requiresAuth: true }},    
+    { path: '/game/betinfo/:type/:code/:termno/:text', name: 'betinfo', component: require('../views/game/betinfo'),meta: { requiresAuth: true }},    
     { path: '/sort', name: 'sort', component: require('../views/sort') },
     { path: '/login', name: 'login', component: require('../views/login') },
     { path: '/register', name: 'register', component: require('../views/register') },

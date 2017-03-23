@@ -238,7 +238,7 @@ methods:{
 			p:__page,
 			s:20
 		}
-        Indicator.open()
+        Indicator.open('加载中...')
 		httpGet(HTTP_URL_API.GAME_DATALIST,data)
 		.then((res)=>{
 			Indicator.close()

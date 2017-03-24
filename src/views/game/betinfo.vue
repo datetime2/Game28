@@ -299,7 +299,9 @@ methods:{
         this.betTotalAmount=tmpBetTotal
     },//按钮模式选择
     butRateEvent(__index,__rate){
-        
+        if(this.inputArray[__index]){
+
+        }
     },//按钮加倍(单个)
     betDoubleEvent(__rate){
         let tmpIptArray=[],tmpBetTotal=0,tmpChkArray=this.checkboxArray

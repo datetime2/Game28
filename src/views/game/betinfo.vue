@@ -180,7 +180,7 @@ computed: mapState({
     userInfo: state => state.userInfo
   }), 
 methods:{
-    ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT']),
+    ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT','USER_CHANGE']),
     setTitle(){
         this.CHANGE_TITLE(this.title)
         this.SHOW_BACK_BUT(true)
@@ -378,7 +378,7 @@ methods:{
     },//获取游戏固定赔率
     submitBet(){
         if(this.betTotalAmount<this.minBetAmount || this.betTotalAmount>this.maxBetAmount){
-            Toast('卧槽..不投点么')
+            Toast('骚年..来玩一下嘛')
             return;
         }
         var data = {
@@ -391,7 +391,7 @@ methods:{
             datatype: "json",
             zone: -8
         }
-        MessageBox.confirm('骚年..确定投注'+this.betTotalAmount+'?').then(action => {
+        MessageBox.confirm('骚年..确定投注: '+this.betTotalAmount+' ?').then(action => {
             httpPost(HTTP_URL_API.GAME_BETINFO,createSign(data)).then((res)=>{
                 if(res){
                     if(res.data.code!=0){
@@ -417,6 +417,39 @@ methods:{
                         }, 2000)
                     }
                 }
+            }).then(()=>{
+                let user={
+                    userid:this.userInfo.userId,
+                    ticket:this.userInfo.ticket,
+                    lang:'cn'
+                }
+                httpPost(HTTP_URL_API.USER_INFOMATION,createSign(user)).then((res)=>{
+                    if(res){
+                        if(res.data.code==0){
+                        let user ={
+                                userName: res.data.data.LoginName,
+                                nickName: res.data.data.NickName ? res.data.data.NickName : '',
+                                userId: res.data.data.Id,
+                                ticket: this.userInfo.ticket,
+                                amount: res.data.data.BalanceAmount,
+                                cellPhone:res.data.data.Phone,
+                                bankAmount:res.data.data.AccountAmount,
+                                email:res.data.data.email
+                            }
+                            this.USER_CHANGE(user)
+                        }
+                        if(res.data.code==98 || res.data.code==99){
+                            this.USER_LOGOUT()
+                            let instance = Toast('登录信息已失效')
+                                setTimeout(() => {
+                                instance.close()
+                                this.$router.push({
+                                        name: 'login'
+                                    })
+                            }, 2000)
+                        }
+                    }
+                })                
             })
 	    })
     },//确认投注

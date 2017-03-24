@@ -66,12 +66,12 @@
                         </li>
                         <li style="width: 100%">
                             <div>
-                                <button class="tzms" @click="chgAllRateEvent(0.5)">0.5倍</button>
-                                <button class="tzms" @click="chgAllRateEvent(1.5)">1.5倍</button>
-                                <button class="tzms" @click="chgAllRateEvent(2)">2倍</button>
-                                <button class="tzms" @click="chgAllRateEvent(5)">5倍</button>
-                                <button class="tzms" @click="chgAllRateEvent(10)">10倍</button>
-                                <button class="tzms" @click="chgAllRateEvent(100)">100倍</button>
+                                <button class="tzms" @click="betDoubleEvent(0.5)">0.5倍</button>
+                                <button class="tzms" @click="betDoubleEvent(1.5)">1.5倍</button>
+                                <button class="tzms" @click="betDoubleEvent(2)">2倍</button>
+                                <button class="tzms" @click="betDoubleEvent(5)">5倍</button>
+                                <button class="tzms" @click="betDoubleEvent(10)">10倍</button>
+                                <button class="tzms" @click="betDoubleEvent(100)">100倍</button>
                             </div>
                         </li>
                         <li style="width: 100%">
@@ -131,16 +131,19 @@
         </div>
     </div>
     <mt-tabbar>
-            <div class="content tzl">
-                <p class="mytitle">期号:<span class="red">814036</span> 金豆:<span class="red">100,007,000,000</span> 
-                投注:<span class="red" id="tbTotal">0</span><input type="hidden" id="hTotal" value="0"></p>
-                <ul class="mytitle">
-                    <li id="liTimer">第<i>814033</i>期 已开奖，请刷新!</li>
-                </ul>
-            </div>
-            <div class="tzr">
-                <a href="javascript:ToSave('1001',814036)" class="tzb">确认投注</a>
-            </div>
+      <div class="content tzl">
+          <p class="mytitle">
+            期号:<span class="red">{{termno}}</span> 
+            金豆:<span class="red">{{Thousands(userInfo.amount)}}</span> 
+            投注:<span class="red" v-model="betTotalAmount"></span>
+          </p>
+          <ul class="mytitle">
+            <li id="liTimer">第<i>814033</i>期 已开奖，请刷新!</li>
+          </ul>
+      </div>
+      <div class="tzr">
+          <a @click="submitBet" class="tzb">确认投注</a>     
+      </div>           
     </mt-tabbar>
   </div>
 </template>
@@ -150,17 +153,20 @@ import HeadNav from '../../components/topNav'
 import{Toast} from 'mint-ui'
 import{HTTP_URL_API} from '../../data/api'
 import {DEFAULT_BET_NUMBER} from '../../data'
-import {httpPost,createSign} from '../../data/util'
+import {httpPost,createSign,toThousands} from '../../data/util'
 export default{
 data(){
     return {
         title:this.$route.params['text'],
         type:this.$route.params['type'],
         code:this.$route.params['code'],
+        termno:this.$route.params['termno'],
         rateList:[],
         betTotalAmount:0,//投注总额
         checkboxArray:[],
-        inputArray:[]
+        inputArray:[],
+        defaultBetNumber:[],
+        maxBetAmount:100000000//最大投注额度(此处写死,生产环境请读取系统配置)
     }
 },    
 created () {
@@ -186,36 +192,131 @@ methods:{
         })
         this.checkboxArray=tmpChkArray
         this.inputArray=tmpIptArray
+        this.betTotalAmount=0
     },//清除
     useSuohaEvent(){
 
     },//不超最大投注额梭哈
     useModelEvent(__model){
-        let tmpChkArray=[],tmpIptArray=[]
+        let tmpChkArray=[],
+            tmpIptArray=[],
+            tmpBetTotal=0,
+            defaultBetAmount=DEFAULT_BET_NUMBER[this.code].split(',')
         switch(__model){
             case 0://全包
-                this.checkboxArray.forEach((obj)=>{
+                this.defaultBetNumber.forEach((vaule,index)=>{
                     tmpChkArray.push(true)
-                })
-                DEFAULT_BET_NUMBER[this.code].split(',').forEach((item)=>{
-                    tmpIptArray.push(item)
-                })
-                this.checkboxArray=tmpChkArray
-                this.inputArray=tmpIptArray
+                    tmpIptArray.push(defaultBetAmount[index])
+                    tmpBetTotal+=parseInt(defaultBetAmount[index])
+                })                
             break;
             case 1://双
-
+                this.defaultBetNumber.forEach((vaule,index)=>{
+                    if(parseInt(vaule[1])%2==0){
+                        tmpChkArray.push(true)
+                        tmpIptArray.push(defaultBetAmount[index])
+                        tmpBetTotal+=parseInt(defaultBetAmount[index])
+                    }
+                    else{
+                        tmpChkArray.push(false)
+                        tmpIptArray.push('')
+                    }
+                })
             break;
             case 2://单
-                
-            break;            
+                this.defaultBetNumber.forEach((vaule,index)=>{
+                    if(parseInt(vaule[1])%2==1){
+                        tmpChkArray.push(true)
+                        tmpIptArray.push(defaultBetAmount[index])
+                        tmpBetTotal+=parseInt(defaultBetAmount[index])
+                    }
+                    else{
+                        tmpChkArray.push(false)
+                        tmpIptArray.push('')
+                    }
+                })
+            break;
+            case 3://小
+                this.defaultBetNumber.forEach((vaule,index)=>{
+                    let number=this.defaultBetNumber.length/2
+                    if(index<number){
+                        tmpChkArray.push(true)
+                        tmpIptArray.push(defaultBetAmount[index])
+                        tmpBetTotal+=parseInt(defaultBetAmount[index])
+                    }
+                    else{
+                        tmpChkArray.push(false)
+                        tmpIptArray.push('')
+                    }
+                })
+            break;        
+            case 4://大
+                this.defaultBetNumber.forEach((vaule,index)=>{
+                    let number=this.defaultBetNumber.length/2
+                    if(index>=number){
+                        tmpChkArray.push(true)
+                        tmpIptArray.push(defaultBetAmount[index])
+                        tmpBetTotal+=parseInt(defaultBetAmount[index])
+                    }
+                    else{
+                        tmpChkArray.push(false)
+                        tmpIptArray.push('')
+                    }
+                })
+            break;
+            case 5://中
+                this.defaultBetNumber.forEach((vaule,index)=>{
+                    let number=this.defaultBetNumber.length/3
+                    if(index >= number & index < 2 * number - 1){
+                        tmpChkArray.push(true)
+                        tmpIptArray.push(defaultBetAmount[index])
+                        tmpBetTotal+=parseInt(defaultBetAmount[index])
+                    }
+                    else{
+                        tmpChkArray.push(false)
+                        tmpIptArray.push('')
+                    }
+                })            
+            break;
+            case 6://边
+                this.defaultBetNumber.forEach((vaule,index)=>{
+                    let number=this.defaultBetNumber.length/4
+                    if(index < number + 3 || index > 3 * number - 4){
+                        tmpChkArray.push(true)
+                        tmpIptArray.push(defaultBetAmount[index])
+                        tmpBetTotal+=parseInt(defaultBetAmount[index])
+                    }
+                    else{
+                        tmpChkArray.push(false)
+                        tmpIptArray.push('')
+                    }
+                })            
+            break;
         }
+        this.checkboxArray=tmpChkArray
+        this.inputArray=tmpIptArray
+        this.betTotalAmount=tmpBetTotal
     },//按钮选择
     chgRateEvent(__index,__rate){
         
     },//加倍(单个)
-    chgAllRateEvent(__rate){
-        Toast('MLGB 让开 我要全部加倍了')
+    betDoubleEvent(__rate){
+        let tmpIptArray=[],tmpBetTotal=0
+        for(let i=0;i<this.inputArray.length;i++)
+        {
+            if(this.inputArray[i]){
+                tmpIptArray.push((parseInt(this.inputArray[i])*__rate)+'')
+                tmpBetTotal+=parseInt(this.inputArray[i])*__rate
+                if(tmpBetTotal>this.maxBetAmount){
+                    Toast('卧槽..大赌伤身少投点')
+                    return false
+                }
+            }
+            else
+                tmpIptArray.push('')
+        }
+        this.inputArray=tmpIptArray
+        this.betTotalAmount=tmpBetTotal
     },//加倍(全部)
     chgRateCheckEvent(__index){
 
@@ -239,19 +340,23 @@ methods:{
         httpPost(HTTP_URL_API.GAME_BETRATE,createSign(rate)).then((res)=>{
             if(res){
                 this.rateList=res.data.data
-                res.data.data.forEach((e)=>{
+                res.data.data.forEach((vaule,index)=>{
                     this.checkboxArray.push(false)
                     this.inputArray.push('')
+                    this.defaultBetNumber.push(new Array(index, vaule.Num))
                 })
             }
         })
     },//获取游戏固定赔率
     submitBet(){
-
+        Toast('MLGB 让开 终于要投了')
     },//确认投注
     getNearTermEvent(){
 
-    }//获取上一期投注信息
+    },//获取上一期投注信息
+	Thousands(val){
+		return toThousands(val)
+	} 
   },
   components: {HeadNav}
 }

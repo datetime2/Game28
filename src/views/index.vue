@@ -193,7 +193,7 @@ methods:{
     ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT']),
     setTitle(){
         this.SHOW_BACK_BUT(false)
-        this.CHANGE_TITLE('好彩投28')
+        this.CHANGE_TITLE('59128')
     },
     Thousands(val){
 	  return toThousands(val)

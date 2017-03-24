@@ -4,7 +4,7 @@ import mutations from './mutations'
 import actions from './actions'
 Vue.use(Vuex)
 const state = {
-    title:'好彩投28 VUE2',
+    title:'59128',
     showBackBut:true,
     userInfo:JSON.parse(window.localStorage.getItem('userStorage')) || {},
     gameCode:'',

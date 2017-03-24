@@ -304,7 +304,7 @@ methods:{
 .rl{float:left;width:100%;height:100%;margin:0 0.5% 0 0;background-image:url(../../assets/images/game/top_backgroup.jpg);background-position:center;background-repeat:no-repeat;background-size: 100%, 100%;}
 .div_1{position:relative;height:100%}
 .head_div{width:15%;text-align:center;float:left;padding:1%}
-.info_div{font-size:.85rem;font-family:黑体;float:left;height:90%;line-height:90%;color:#ffffff;width:40%}
+.info_div{font-size:.8rem;font-family:黑体;float:left;height:90%;line-height:90%;color:#ffffff;width:40%}
 .info_div p{height:20%}
 .info_div{font-size:.85rem;font-family:黑体;float:left;height:90%;line-height:90%;color:#ffffff;width:40%}
 .info_div p{height:20%}

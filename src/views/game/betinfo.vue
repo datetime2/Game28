@@ -134,7 +134,7 @@
       <div class="content tzl">
           <p class="mytitle">
             期号:<span class="red">{{termno}}</span> 
-            金豆:<span class="red">{{Thousands(userInfo.amount)}}</span> 
+            金币:<span class="red">{{Thousands(userInfo.amount)}}</span> 
             投注:<span class="red" v-html="Thousands(betTotalAmount)"></span>
           </p>
           <ul class="mytitle">
@@ -437,7 +437,7 @@ methods:{
             datatype: "json",
             zone: -8
         }
-        MessageBox.confirm('骚年..确定投注: '+this.betTotalAmount+' ?').then(action => {
+        MessageBox.confirm('骚年..确定投注: '+this.betTotalAmount+' 金币?').then(action => {
             httpPost(HTTP_URL_API.GAME_BETINFO,createSign(data)).then((res)=>{
                 if(res){
                     if(res.data.code!=0){

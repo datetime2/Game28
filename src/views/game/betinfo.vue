@@ -52,7 +52,6 @@
             <div class="content">
                 <div class="menu">
                     <ul>
-                        <input type="hidden" id="hidTimes" value="1">
                         <li style="width: 100%">
                             <div>
                                 <button class="tzms" @click="useModelEvent(2)">单</button>
@@ -80,7 +79,7 @@
                                 <button class="tzms ora" @click="useModelEvent(0)">全包</button>
                                 <button class="tzms ora" href="javascript:useSuoha();">梭哈</button>
                                 <button class="tzms ora" href="javascript:subSelect()">反选</button>
-                                <button class="tzms ora" href="javascript:init()">清除</button>
+                                <button class="tzms ora" @click="selectGameInit()">清除</button>
                                 <button class="tzms ora" href="javascript:LastPress('1006',813909);">上期</button>
                                 <button class="tzms morebtn">模式</button>
                             </div>
@@ -96,7 +95,7 @@
                                         <input type="text" id="betsLeft" class="avinput">
                                     </div>
                                     <div class="self2">
-                                        <button href="javascript:usefenpei()">&nbsp;定额梭哈&nbsp;</button>
+                                        <button @click="useBetAllEvent()">&nbsp;定额梭哈&nbsp;</button>
                                     </div>
                                 </div>
                             </div>
@@ -118,13 +117,13 @@
                     <tr v-for="(rate,index) in rateList">
                         <td align="center" style="border-left: 1px solid #ccc"><span class="num_1">{{rate.Num}}</span></td>
                         <td>{{rate.Odds}}</td>
-                        <td><input :id="'tbChk'+index" type="checkbox" name="tbChk" @click="chgRateCheckEvent(this, 'tbNum'+index)" class="chkRate"/></td>
-                        <td><input :id="'tbNum'+index" type="number" @blur="chgRateInputEvent(this, 'tbChk'+index)">
+                        <td><input type="checkbox" @click="chgRateCheckEvent(index)" class="chkRate" v-model="checkboxArray[index]"/></td>
+                        <td><input type="number" @blur="chgRateInputEvent(index)" v-model="inputArray[index]"/>
                         </td>
                         <td class="bs">
-                            <button @click="chgRateEvent('tbNum'+index,0.5)" class="multiple">.5</button>
-                            <button @click="chgRateEvent('tbNum'+index,2)" class="multiple">2</button>
-                            <button @click="chgRateEvent('tbNum'+index,10)" class="multiple">10</button>
+                            <button @click="chgRateEvent(index,0.5)" class="multiple">.5</button>
+                            <button @click="chgRateEvent(index,2)" class="multiple">2</button>
+                            <button @click="chgRateEvent(index,10)" class="multiple">10</button>
                         </td>
                     </tr>
                 </tbody>
@@ -138,6 +137,7 @@ import { mapMutations,mapState } from 'vuex'
 import HeadNav from '../../components/topNav'
 import{Toast} from 'mint-ui'
 import{HTTP_URL_API} from '../../data/api'
+import {DEFAULT_BET_NUMBER} from '../../data'
 import {httpPost,createSign} from '../../data/util'
 export default{
 data(){
@@ -145,7 +145,10 @@ data(){
         title:this.$route.params['text'],
         type:this.$route.params['type'],
         code:this.$route.params['code'],
-        rateList:[]
+        rateList:[],
+        betTotalAmount:0,//投注总额
+        checkboxArray:[],
+        inputArray:[]
     }
 },    
 created () {
@@ -163,23 +166,51 @@ methods:{
         this.CHANGE_TITLE(this.title)
         this.SHOW_BACK_BUT(true)
     },
+    selectGameInit(){
+        let tmpChkArray=[],tmpIptArray=[]
+        this.checkboxArray.forEach((obj)=>{
+            tmpChkArray.push(false)
+            tmpIptArray.push('')
+        })
+        this.checkboxArray=tmpChkArray
+        this.inputArray=tmpIptArray
+    },
     useModelEvent(__model){
-        Toast('MLGB 让开 我要包场了')
-    },
-    chgRateEvent(__dom,__rate){
-        console.log(__dom)
-        console.log(__rate)
-        Toast('MLGB 让开 我要加倍了')
-    },
+        let tmpChkArray=[],tmpIptArray=[]
+        switch(__model){
+            case 0://全包
+                this.checkboxArray.forEach((obj)=>{
+                    tmpChkArray.push(true)
+                })
+                DEFAULT_BET_NUMBER[this.code].split(',').forEach((item)=>{
+                    tmpIptArray.push(item)
+                })
+                this.checkboxArray=tmpChkArray
+                this.inputArray=tmpIptArray
+            break;
+            case 1://双
+
+            break;
+            case 2://单
+                
+            break;            
+        }
+    },//按钮选择
+    chgRateEvent(__index,__rate){
+        
+    },//加倍(单个)
     chgAllRateEvent(__rate){
         Toast('MLGB 让开 我要全部加倍了')
-    },
-    chgRateCheckEvent(__obj,__dom){
+    },//加倍(全部)
+    chgRateCheckEvent(__index){
 
-    },
-    chgRateInputEvent(__obj,__dom){
+    },//手动选择框修改
+    chgRateInputEvent(__index){
 
-    },
+    },//手动输入框修改
+    useBetAllEvent(){
+
+    },//梭哈
     getGameRate(){
         let rate={
             c:this.code,
@@ -190,9 +221,16 @@ methods:{
         httpPost(HTTP_URL_API.GAME_BETRATE,createSign(rate)).then((res)=>{
             if(res){
                 this.rateList=res.data.data
+                res.data.data.forEach((e)=>{
+                    this.checkboxArray.push(false)
+                    this.inputArray.push('')
+                })
             }
         })
-    }
+    },//获取游戏固定赔率
+    submitBet(){
+
+    }//确认投注
   },
   components: {HeadNav}
 }

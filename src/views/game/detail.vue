@@ -290,7 +290,6 @@ methods:{
 			text:this.$route.params['text'],
 			termno:__termNum
 		}})
-		Toast('闪开 我要投注了'+__termNum)
 	}
   },
   components: {HeadNav,FootNav}

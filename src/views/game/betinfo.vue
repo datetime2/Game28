@@ -117,7 +117,7 @@
                     <tr v-for="(rate,index) in rateList">
                         <td align="center" style="border-left: 1px solid #ccc"><span class="num_1">{{rate.Num}}</span></td>
                         <td>{{rate.Odds}}</td>
-                        <td><input type="checkbox" @click="chgRateCheckEvent(index)" class="chkRate" v-model="checkboxArray[index]"/></td>
+                        <td><input type="checkbox" @click="chgRateCheckEvent(this,index)" class="chkRate" v-model="checkboxArray[index]"/></td>
                         <td><input type="number" @blur="chgRateInputEvent(index)" v-model="inputArray[index]"/>
                         </td>
                         <td class="bs">
@@ -301,15 +301,25 @@ methods:{
         
     },//加倍(单个)
     betDoubleEvent(__rate){
-        let tmpIptArray=[],tmpBetTotal=0
+        let tmpIptArray=[],tmpBetTotal=0,tmpChkArray=this.checkboxArray
         for(let i=0;i<this.inputArray.length;i++)
         {
-            if(this.inputArray[i]){
-                tmpIptArray.push((parseInt(this.inputArray[i])*__rate)+'')
-                tmpBetTotal+=parseInt(this.inputArray[i])*__rate
-                if(tmpBetTotal>this.maxBetAmount){
-                    Toast('卧槽..大赌伤身少投点')
-                    return false
+            if(this.inputArray[i])
+            {
+                let tmpNumber=parseInt(this.inputArray[i])*__rate
+                if(tmpNumber>1)
+                {
+                    tmpIptArray.push(Math.floor(tmpNumber)+'')
+                    tmpBetTotal+=Math.floor(tmpNumber)
+                    if(tmpBetTotal>this.maxBetAmount){
+                        Toast('卧槽..大赌伤身少投点')
+                        return false
+                    }
+                }
+                else
+                {
+                    tmpIptArray.push('')
+                    tmpChkArray[i]=false
                 }
             }
             else
@@ -317,18 +327,35 @@ methods:{
         }
         this.inputArray=tmpIptArray
         this.betTotalAmount=tmpBetTotal
+        this.checkboxArray=tmpChkArray
     },//加倍(全部)
-    chgRateCheckEvent(__index){
-
+    chgRateCheckEvent(__obj,__index){
+        console.log(__obj)
     },//手动选择框修改
     chgRateInputEvent(__index){
 
     },//手动输入框修改
     useBetAllEvent(){
 
-    },//梭哈
+    },//定额梭哈(<最大投注额 <用户可用余额)
     unSelectEvent(){
-
+        let tmpIptArray=[],tmpBetTotal=0,tmpChkArray=[],
+            defaultBetAmount=DEFAULT_BET_NUMBER[this.code].split(',');
+        this.defaultBetNumber.forEach((value,index)=>{
+            if(this.checkboxArray[index]){
+                tmpChkArray.push(false);
+                tmpIptArray.push('');
+            }
+            else{
+                let __amount=defaultBetAmount[index];
+                tmpChkArray.push(true);
+                tmpIptArray.push(__amount);
+                tmpBetTotal+=__amount;
+            }
+        })
+        this.inputArray=tmpIptArray
+        this.betTotalAmount=tmpBetTotal
+        this.checkboxArray=tmpChkArray
     },//反选
     getGameRate(){
         let rate={

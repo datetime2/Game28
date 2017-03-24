@@ -117,13 +117,13 @@
                     <tr v-for="(rate,index) in rateList">
                         <td align="center" style="border-left: 1px solid #ccc"><span class="num_1">{{rate.Num}}</span></td>
                         <td>{{rate.Odds}}</td>
-                        <td><input type="checkbox" @click="chgRateCheckEvent(this,index)" class="chkRate" v-model="checkboxArray[index]"/></td>
+                        <td><input type="checkbox" @click="chgRateCheckEvent(index)" class="chkRate" v-model="checkboxArray[index]"/></td>
                         <td><input type="number" @blur="chgRateInputEvent(index)" v-model="inputArray[index]"/>
                         </td>
                         <td class="bs">
-                            <button @click="chgRateEvent(index,0.5)" class="multiple">.5</button>
-                            <button @click="chgRateEvent(index,2)" class="multiple">2</button>
-                            <button @click="chgRateEvent(index,10)" class="multiple">10</button>
+                            <button @click="butRateEvent(index,0.5)" class="multiple">.5</button>
+                            <button @click="butRateEvent(index,2)" class="multiple">2</button>
+                            <button @click="butRateEvent(index,10)" class="multiple">10</button>
                         </td>
                     </tr>
                 </tbody>
@@ -297,10 +297,10 @@ methods:{
         this.checkboxArray=tmpChkArray
         this.inputArray=tmpIptArray
         this.betTotalAmount=tmpBetTotal
-    },//按钮选择
-    chgRateEvent(__index,__rate){
+    },//按钮模式选择
+    butRateEvent(__index,__rate){
         
-    },//加倍(单个)
+    },//按钮加倍(单个)
     betDoubleEvent(__rate){
         let tmpIptArray=[],tmpBetTotal=0,tmpChkArray=this.checkboxArray
         for(let i=0;i<this.inputArray.length;i++)
@@ -330,11 +330,55 @@ methods:{
         this.betTotalAmount=tmpBetTotal
         this.checkboxArray=tmpChkArray
     },//加倍(全部)
-    chgRateCheckEvent(__obj,__index){
-        console.log(__obj)
+    chgRateCheckEvent(__index){
+        let tmpIptArray=[],tmpBetTotal=0,tmpChkArray=[],
+            defaultBetAmount=DEFAULT_BET_NUMBER[this.code].split(',');
+        for(let i=0;i<defaultBetAmount.length;i++){
+            let curChk=this.checkboxArray[i],
+                curIpt=this.inputArray[i]
+            if(i==__index){
+                tmpChkArray.push(!curChk)
+                tmpIptArray.push(!curChk?defaultBetAmount[i]:'')
+            }
+            else{
+                tmpChkArray.push(curChk)
+                tmpIptArray.push(curIpt)
+            }
+        }
+        tmpIptArray.forEach((value)=>{
+            if(value){
+                tmpBetTotal+=parseInt(value)
+            }
+        })
+        this.inputArray=tmpIptArray
+        this.betTotalAmount=tmpBetTotal
+        this.checkboxArray=tmpChkArray
     },//手动选择框修改
     chgRateInputEvent(__index){
-
+        let tmpIptArray=[],tmpBetTotal=0,tmpChkArray=[],
+            defaultBetAmount=DEFAULT_BET_NUMBER[this.code].split(',');
+        if(this.inputArray[__index]){
+            for(let i=0;i<defaultBetAmount.length;i++){
+                let curChk=this.checkboxArray[i],
+                    curIpt=this.inputArray[i]
+                if(i==__index && this.inputArray[i]){
+                    tmpChkArray.push(true)
+                    tmpIptArray.push(this.inputArray[i])
+                }
+                else{
+                    tmpChkArray.push(curChk)
+                    tmpIptArray.push(curIpt)
+                }
+            }
+            tmpIptArray.forEach((value)=>{
+                if(value){
+                    tmpBetTotal+=parseInt(value)
+                }
+            })
+            this.inputArray=tmpIptArray
+            this.betTotalAmount=tmpBetTotal
+            this.checkboxArray=tmpChkArray
+        }
     },//手动输入框修改
     useBetAllEvent(){
 
@@ -378,7 +422,7 @@ methods:{
     },//获取游戏固定赔率
     submitBet(){
         if(this.betTotalAmount<this.minBetAmount || this.betTotalAmount>this.maxBetAmount){
-            Toast('骚年..来玩一下嘛')
+            Toast('骚年..不够,多投点')
             return;
         }
         var data = {
@@ -479,8 +523,8 @@ methods:{
 .moddiv ul{margin:2% 0 1.5% 2%;padding:0 0 5% 0}
 .moddiv ul li{float:left;padding-bottom:0.5%;list-style:none}
 .moddiv ul li a{cursor:pointer}
-.tzms{margin:1% 1.5% 1% 0;border:1px solid #a3a3a3;font-size:.75rem;line-height:1.5rem;height:1.5rem;width:14%;float:left;text-align:center;background-image:-moz-linear-gradient(top,#FDFDFE,#F2F4F6);background-image:-webkit-gradient(linear,left top,left bottom,from(#FDFDFE),to(#F2F4F6));filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#FDFDFE,endColorstr=#F2F4F6);-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#FDFDFE,endColorstr=#F2F4F6)";-webkit-box-shadow:1px 1px 1px rgba(0,0,0,0.2);-moz-box-shadow:1px 1px 1px rgba(0,0,0,0.2);box-shadow:1px 1px 1px rgba(0,0,0,0.2)}
-.chips{margin:1% 1% 1% 0;border:1px solid #ccc;font-size:.75rem;line-height:1.5rem;height:1.5rem;width:11%;float:left;text-align:center;background-image:-moz-linear-gradient(top,#FDFDFE,#F2F4F6);background-image:-webkit-gradient(linear,left top,left bottom,from(#FDFDFE),to(#F2F4F6));filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#FDFDFE,endColorstr=#F2F4F6);-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#FDFDFE,endColorstr=#F2F4F6)";-webkit-box-shadow:1px 1px 1px rgba(0,0,0,0.2);-moz-box-shadow:1px 1px 1px rgba(0,0,0,0.2);box-shadow:1px 1px 1px rgba(0,0,0,0.2)}
+.tzms{margin:1% 1.5% 1% 0;border:1px solid #a3a3a3;font-size:.75rem;line-height:1.5rem;height:1.5rem;width:15%;float:left;text-align:center;background-image:-moz-linear-gradient(top,#FDFDFE,#F2F4F6);background-image:-webkit-gradient(linear,left top,left bottom,from(#FDFDFE),to(#F2F4F6));filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#FDFDFE,endColorstr=#F2F4F6);-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#FDFDFE,endColorstr=#F2F4F6)";-webkit-box-shadow:1px 1px 1px rgba(0,0,0,0.2);-moz-box-shadow:1px 1px 1px rgba(0,0,0,0.2);box-shadow:1px 1px 1px rgba(0,0,0,0.2)}
+.chips{margin:1% 1% 1% 0;border:1px solid #ccc;font-size:.75rem;line-height:1.5rem;height:1.5rem;width:12.5%;float:left;text-align:center;background-image:-moz-linear-gradient(top,#FDFDFE,#F2F4F6);background-image:-webkit-gradient(linear,left top,left bottom,from(#FDFDFE),to(#F2F4F6));filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#FDFDFE,endColorstr=#F2F4F6);-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#FDFDFE,endColorstr=#F2F4F6)";-webkit-box-shadow:1px 1px 1px rgba(0,0,0,0.2);-moz-box-shadow:1px 1px 1px rgba(0,0,0,0.2);box-shadow:1px 1px 1px rgba(0,0,0,0.2)}
 .self{margin:1% 0;border:1px solid #ccc;color:#8b5100;float:left;line-height:150%;height:150%;padding:0px;width:43%}
 .self1{width:50%;float:left}
 .avinput{border:medium none;color:#f00;line-height:150%;height:150%;width:100%;padding-left:1%}

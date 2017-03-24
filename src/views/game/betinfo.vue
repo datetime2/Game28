@@ -130,6 +130,18 @@
             </table>
         </div>
     </div>
+    <mt-tabbar>
+            <div class="content tzl">
+                <p class="mytitle">期号:<span class="red">814036</span> 金豆:<span class="red">100,007,000,000</span> 
+                投注:<span class="red" id="tbTotal">0</span><input type="hidden" id="hTotal" value="0"></p>
+                <ul class="mytitle">
+                    <li id="liTimer">第<i>814033</i>期 已开奖，请刷新!</li>
+                </ul>
+            </div>
+            <div class="tzr">
+                <a href="javascript:ToSave('1001',814036)" class="tzb">确认投注</a>
+            </div>
+    </mt-tabbar>
   </div>
 </template>
 <script>
@@ -273,4 +285,11 @@ methods:{
 .bs a{background:#eee none repeat scroll 0 0;border:1px solid #d7d7d7;border-radius:1px;color:#555;padding:1%;width:24%;margin-left:2%;line-height:100%;float:left}
 .num_1{background:#e64047 none repeat scroll 0 0;border-radius:50%;color:#fff;display:block;font-weight:bold;text-align:center;width:20px;height:20px}
 .chkRate{width:1.2rem !important;height:1.2rem !important;}
+.mint-tabbar{height:66px !important;background-color:#fff !important;font-size:.75rem;}
+.mint-tabbar .content{margin-top:3%;color:#777777}
+.mint-tabbar .content .mytitle{margin:0;padding:0.5%}
+.red{color:#ff0000}
+.mint-tabbar .tzl{width:80%;float:left;text-align: left;}
+.mint-tabbar .tzr{width:23%;float:right;margin-top:3%;}
+.mint-tabbar .tzr .tzb{float:right;color:#fff;background-color:#F05550;line-height:270%;margin:6% 6% 6% 6%;text-align:center;width:105%;border-radius:2px}
 </style>

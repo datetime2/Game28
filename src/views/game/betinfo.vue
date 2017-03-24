@@ -150,7 +150,7 @@
 <script>
 import { mapMutations,mapState } from 'vuex'
 import HeadNav from '../../components/topNav'
-import{Toast} from 'mint-ui'
+import{Toast,MessageBox} from 'mint-ui'
 import{HTTP_URL_API} from '../../data/api'
 import {DEFAULT_BET_NUMBER} from '../../data'
 import {httpPost,createSign,toThousands} from '../../data/util'
@@ -166,7 +166,8 @@ data(){
         checkboxArray:[],
         inputArray:[],
         defaultBetNumber:[],
-        maxBetAmount:100000000//最大投注额度(此处写死,生产环境请读取系统配置)
+        maxBetAmount:100000000,//最大投注额度(此处写死,生产环境请读取系统配置)
+        minBetAmount:100//最小投注额度(此处写死,生产环境请读取系统配置)
     }
 },    
 created () {
@@ -350,7 +351,7 @@ methods:{
                 let __amount=defaultBetAmount[index];
                 tmpChkArray.push(true);
                 tmpIptArray.push(__amount);
-                tmpBetTotal+=__amount;
+                tmpBetTotal+=parseInt(__amount);
             }
         })
         this.inputArray=tmpIptArray
@@ -376,7 +377,48 @@ methods:{
         })
     },//获取游戏固定赔率
     submitBet(){
-        Toast('MLGB 让开 终于要投了')
+        if(this.betTotalAmount<this.minBetAmount || this.betTotalAmount>this.maxBetAmount){
+            Toast('卧槽..不投点么')
+            return;
+        }
+        var data = {
+            gtype: this.code,
+            ticket:this.userInfo.ticket,
+            userid:this.userInfo.userId,
+            no: this.termno,
+            betNo: this.inputArray.join(','),
+            total: this.betTotalAmount,
+            datatype: "json",
+            zone: -8
+        }
+        MessageBox.confirm('骚年..确定投注'+this.betTotalAmount+'?').then(action => {
+            httpPost(HTTP_URL_API.GAME_BETINFO,createSign(data)).then((res)=>{
+                if(res){
+                    if(res.data.code!=0){
+                        Toast(res.data.message)  
+                    }
+                    else{
+                        var instance= Toast('骚年..投注成功')
+                        let tmpIptArray=[],tmpChkArray=[]
+                        this.defaultBetNumber.forEach((vaule,index)=>{
+                            tmpIptArray.push('')
+                            tmpChkArray.push(false)
+                        })
+                        this.checkboxArray=tmpChkArray
+                        this.betTotalAmount=0
+                        this.inputArray=tmpIptArray
+                        setTimeout(() => {
+                            instance.close()
+                            this.$router.push({name:'detail',params:{
+                                code:this.code,
+                                type:this.type,
+                                text:this.$route.params['text']
+                            }})
+                        }, 2000)
+                    }
+                }
+            })
+	    })
     },//确认投注
     getNearTermEvent(){
 

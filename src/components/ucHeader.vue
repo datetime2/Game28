@@ -61,7 +61,7 @@ export default{
 			MessageBox.confirm('确定退出登录?').then(action => {
 				this.USER_LOGOUT()
 				this.$router.push({name:'index'})
-	    })
+	    	})
 		}		  
   }
 }

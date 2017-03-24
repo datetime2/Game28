@@ -135,7 +135,7 @@
           <p class="mytitle">
             期号:<span class="red">{{termno}}</span> 
             金豆:<span class="red">{{Thousands(userInfo.amount)}}</span> 
-            投注:<span class="red" v-model="betTotalAmount"></span>
+            投注:<span class="red" v-html="Thousands(betTotalAmount)"></span>
           </p>
           <ul class="mytitle">
             <li id="liTimer">第<i>814033</i>期 已开奖，请刷新!</li>

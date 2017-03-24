@@ -306,8 +306,6 @@ methods:{
 .head_div{width:15%;text-align:center;float:left;padding:1%}
 .info_div{font-size:.8rem;font-family:黑体;float:left;height:90%;line-height:90%;color:#ffffff;width:40%}
 .info_div p{height:20%}
-.info_div{font-size:.85rem;font-family:黑体;float:left;height:90%;line-height:90%;color:#ffffff;width:40%}
-.info_div p{height:20%}
 .div_2,.div_3{clear:both}
 .div_2 ul,.div_3 ul{padding:0 1% 0 1%;margin:2%;font-size:.7rem;color:#8998bf}
 .div_2 ul li{height:10%;list-style:none;}

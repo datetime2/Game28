@@ -77,10 +77,10 @@
                         <li style="width: 100%">
                             <div>
                                 <button class="tzms ora" @click="useModelEvent(0)">全包</button>
-                                <button class="tzms ora" href="javascript:useSuoha();">梭哈</button>
-                                <button class="tzms ora" href="javascript:subSelect()">反选</button>
-                                <button class="tzms ora" @click="selectGameInit()">清除</button>
-                                <button class="tzms ora" href="javascript:LastPress('1006',813909);">上期</button>
+                                <button class="tzms ora" @click="useSuohaEvent()">梭哈</button>
+                                <button class="tzms ora" @click="unSelectEvent()">反选</button>
+                                <button class="tzms ora" @click="initSelectEvent()">清除</button>
+                                <button class="tzms ora" @click="getNearTermEvent('1006',813909)">上期</button>
                                 <button class="tzms morebtn">模式</button>
                             </div>
                         </li>
@@ -166,7 +166,7 @@ methods:{
         this.CHANGE_TITLE(this.title)
         this.SHOW_BACK_BUT(true)
     },
-    selectGameInit(){
+    initSelectEvent(){
         let tmpChkArray=[],tmpIptArray=[]
         this.checkboxArray.forEach((obj)=>{
             tmpChkArray.push(false)
@@ -174,7 +174,10 @@ methods:{
         })
         this.checkboxArray=tmpChkArray
         this.inputArray=tmpIptArray
-    },
+    },//清除
+    useSuohaEvent(){
+
+    },//不超最大投注额梭哈
     useModelEvent(__model){
         let tmpChkArray=[],tmpIptArray=[]
         switch(__model){
@@ -211,6 +214,9 @@ methods:{
     useBetAllEvent(){
 
     },//梭哈
+    unSelectEvent(){
+
+    },//反选
     getGameRate(){
         let rate={
             c:this.code,
@@ -230,7 +236,10 @@ methods:{
     },//获取游戏固定赔率
     submitBet(){
 
-    }//确认投注
+    },//确认投注
+    getNearTermEvent(){
+
+    }//获取上一期投注信息
   },
   components: {HeadNav}
 }

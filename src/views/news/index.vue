@@ -11,7 +11,9 @@
 			</div>
 		</div>
 		<div class="newsdiv">
-			<ul v-infinite-scroll="loadMoreMessage" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+			<ul v-infinite-scroll="loadMore" 
+			infinite-scroll-disabled="infiniteDisabled" 
+			infinite-scroll-distance="10">
 				<li v-for="message in messageList">
 					<div class="bg">
 						<div>
@@ -32,7 +34,7 @@
 					</div>
 				</li>
 			</ul>
-			<p v-show="loading" class="page-infinite-loading">
+			<p v-show="isLoading" class="page-infinite-loading">
           			拼命加载中...
         	</p>
 		</div>
@@ -55,49 +57,48 @@ data(){
 		page:1,
 		size:13,
 		messageList:[],
-		maxPage:1,
-		loading:false
+		infiniteDisabled:false,
+		isLoading:true
 	}
 },
 created () {
     this.setTitle()
-  },
-mounted(){
-	this.getMessage()
-},    
+  }, 
 methods:{
     ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT']),
     setTitle(){
         this.CHANGE_TITLE('新闻公告')
         this.SHOW_BACK_BUT(true)
     },
-	getMessage(){
-		this.loadMessage(1,false)
-    },
-	loadMoreMessage(){
-		this.loading=true		
-		this.page++
-		this.loadMessage(this.page,true)
-		this.loading=false			
+	loadMore(){
+		let mySelf = this;
+        mySelf.isLoading = true;
+        console.log('loading')
+		mySelf.getMessage()
 	},
-	loadMessage(__page,__isScroll){
+	getMessage(){
 		axios.get(HTTP_URL_API.SYSTEM_MESSAGE,
 		{
-			params:{page:__page,size:this.size}
+			params:
+			{
+				page:this.page,
+				size:this.size
+			}
 		})
 		.then((res) => {
 			if(res.data.rows){
-				this.maxPage=Math.ceil(res.data.total/res.data.pagesize)
-				if(!__isScroll){
-					this.messageList = res.data.rows
-				}
-				else{
-					let newMessageList=this.messageList.concat(res.data.rows)
-					this.messageList=newMessageList
+				let maxPage=Math.ceil(res.data.total/res.data.pagesize)
+				this.messageList=this.messageList.concat(res.data.rows)
+				this.page+=1
+				if(this.page>maxPage){
+					this.infiniteDisabled=true
+					this.isLoading=false
 				}
 			}
-			else
-				this.loading=false
+			else {
+				this.infiniteDisabled = true
+				this.isLoading = false
+          	}
       	})
 	}
   },

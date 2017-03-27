@@ -83,7 +83,7 @@
 				</div>
 				<div class="div_2">
 					<ul>
-						<li>今日｜盈亏:<i>{{Thousands(userBet.Shares)}}</i>,参与:<i>{{userBet.Periods}}</i>,胜率:<i>{{userBet.Rate+'%'}}</i></li>
+						<li>今日｜盈亏:<i>{{Thousands(userBet.Shares)}}</i>,参与:<i>{{userBet.Periods}}</i>,胜率:<i>{{userBet.Rate}}%</i></li>
 					</ul>
 				</div>
 				<div class="div_3">
@@ -200,12 +200,13 @@ data(){
 	return{
 		type:this.$route.params['type'],
 		code:this.$route.params['code'],
+		text:this.$route.params['text'],
 		gameList:[],
 		currentGame:{},
 		userBet:{},
 		page:1,
 		currentGameTimer:'第<i> 000000 </i>期 还有<em> 000 </em>秒停止下注!',
-		interTimer:''
+		autoRefushTimer:''
 	}
 },	
 created () {
@@ -215,14 +216,14 @@ computed: mapState({
     userInfo: state => state.userInfo,
 	title:state=>state.title,
 	globalTimer:state=>state.globalTimer
-  }), 
+  }),
 mounted(){
 	this.getGameList(this.page)			
 },   
 methods:{
     ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT','GLOBAL_TIMER','USER_CHANGE','USER_LOGOUT']),
     setTitle(){
-        this.CHANGE_TITLE(this.$route.params['text'])
+        this.CHANGE_TITLE(this.text)
         this.SHOW_BACK_BUT(true)
     },
 	Thousands(val){
@@ -248,7 +249,7 @@ methods:{
 				this.userBet=res.data.Game.User
 				this.currentGame=res.data.Game.Current
 			}
-		})
+		})		
 		.then(()=>{
 			let user={
 				userid:this.userInfo.userId,
@@ -276,7 +277,8 @@ methods:{
 							setTimeout(() => {
 							instance.close()
 							this.$router.push({
-                    				name: 'login'
+                    				name: 'login',
+									query:{redirect:'/game/detail/'+this.type+'/'+this.code+'/'+this.text}
                 				})
 						}, 2000)
 					}
@@ -291,12 +293,49 @@ methods:{
 			text:this.$route.params['text'],
 			termno:__termNum
 		}})
+	},
+	setTimerRefush(){
+		let mySelf=this
+		let stopSec=parseInt(mySelf.currentGame.StopSec),
+			lotterySec=parseInt(mySelf.currentGame.KjSec),
+			currentTermNo=mySelf.currentGame.TermNo
+		mySelf.autoRefushTimer=setTimeout(function(){
+			if (lotterySec <= 0) {
+                    if (lotterySec == -2) {
+                        mySelf.currentGameTimer='Loading......'
+                        // this.getGameList(1)
+                    } else if (lotterySec < -2 && Math.abs(lotterySec) % 3 == 0) {
+                        mySelf.currentGameTimer='Loading......'
+                        // this.getGameList(1)
+                    } else {
+                        mySelf.currentGameTimer='第<i> ' + currentTermNo + ' </i>期 正在开奖,请稍后!'
+                    }
+                    lotterySec--
+                } else {
+                    if (stopSec == 0) {
+						// var dom=document.getElementById(currentTermNo)
+						// dom.innerHTML='<img src="../../assets/images/game/kj.png" width="90%"/>'
+                    }
+                    if (stopSec > 0) {
+                        mySelf.currentGameTimer='第<i> ' + currentTermNo + ' </i>期 还有<em> ' + stopSec + ' </em>秒停止下注!'
+                    } else {
+                        mySelf.currentGameTimer='第<i> ' + currentTermNo + ' </i>期 停止下注，还有<em> ' + lotterySec + ' </em>秒开奖!'
+                    }
+                    lotterySec--
+                    stopSec--
+                }
+			// mySelf.getGameList(1)
+		},1000)
+	},
+	clearTimerRefush(){
+		let mySelf=this
+		clearTimeout(mySelf.autoRefushTimer);
 	}
   },
   components: {HeadNav,FootNav}
 }
 </script>
-<style scoped>
+<style>
 .menudiv2{float:left;width:100%;background:#4F1511}
 .menudiv2 ul{margin:3% 0 7% 1%;padding:0 0 2% 1%}
 .menudiv2 li{float:left;margin-right:1%;background-image:url(../../assets/images/game/btn_topyellow.png);background-position:center;background-repeat:no-repeat;padding:.2rem .3rem;border-radius:5px;line-height:140%;height:140%;margin-bottom:2%;list-style:none}
@@ -328,4 +367,9 @@ table td{border:1px solid #ccc;border-top:none;border-left:none}
 .kj_l,.kj_r{float:left;height:20px;line-height:20px}
 .zjrnum,.win1{color:#ff0000;font-size:.85rem}
 .tznum,.lose1{color:#17bd4d;font-size:.75rem}
+.ka0{background:#d40000 none repeat scroll 0 0}
+.ka1{background:#29ae00 none repeat scroll 0 0}
+.ka2{background:#0027ab none repeat scroll 0 0}
+.ka3{background:#f65a00 none repeat scroll 0 0}
+.ka4{background:#259be2 none repeat scroll 0 0}
 </style>

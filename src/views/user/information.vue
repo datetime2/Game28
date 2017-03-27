@@ -36,7 +36,7 @@ created () {
     this.setTitle()
   },     
 methods:{
-    ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT']),
+    ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT','USER_CHANGE','USER_LOGOUT']),
     setTitle(){
         this.CHANGE_TITLE('会员中心')
         this.SHOW_BACK_BUT(true)
@@ -49,12 +49,47 @@ methods:{
             userid:this.$store.state.userInfo.userId,
             lang:'cn'
         }
-        httpPost(HTTP_URL_API.USER_MODIFY,createSign(data)).then((res)=>{
+        httpPost(HTTP_URL_API.USER_MODIFY,createSign(data))
+        .then((res)=>{
             if(res && res.data.code==0)
                 Toast('操作成功')
             else 
                 Toast(res.data.errors)
         })
+        .then(()=>{
+                let user={
+                    userid:this.$store.state.userInfo.userId,
+                    ticket:this.$store.state.userInfo.ticket,
+                    lang:'cn'
+                }
+                httpPost(HTTP_URL_API.USER_INFOMATION,createSign(user)).then((res)=>{
+                    if(res){
+                        if(res.data.code==0){
+                        let user ={
+                                userName: res.data.data.LoginName,
+                                nickName: res.data.data.NickName ? res.data.data.NickName : '',
+                                userId: res.data.data.Id,
+                                ticket: this.$store.state.userInfo.ticket,
+                                amount: res.data.data.BalanceAmount,
+                                cellPhone:res.data.data.Phone,
+                                bankAmount:res.data.data.AccountAmount,
+                                email:res.data.data.email
+                            }
+                            this.USER_CHANGE(user)
+                        }
+                        if(res.data.code==98 || res.data.code==99){
+                            this.USER_LOGOUT()
+                            let instance = Toast('登录信息已失效')
+                                setTimeout(() => {
+                                instance.close()
+                                this.$router.push({
+                                        name: 'login'
+                                    })
+                            }, 2000)
+                        }
+                    }
+                })                
+            })
     }
   },
   components: {HeadNav,FootNav,UcHeader}

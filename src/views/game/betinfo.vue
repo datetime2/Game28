@@ -92,7 +92,7 @@
                                 <button class="chips" @click="useSuohaQuoTaEvent(1000000)">1000</button>
                                 <div class="self">
                                     <div class="self1">
-                                        <input type="text" id="betsLeft" class="avinput" readonly="readonly" v-model="fixedQuota">
+                                        <span v-html="fixedQuota"></span>
                                     </div>
                                     <div class="self2">
                                         <button>&nbsp;定额梭哈&nbsp;</button>

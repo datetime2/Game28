@@ -125,7 +125,7 @@
 								</span>
 								<br>
 								<span class="kjtime">
-									{{DateFormat(game.LotteryTime,'MM-dd hh:mm:ss')}}
+									{{Moment(game.LotteryTime,'MM-DD HH:mm:ss')}}
 								</span>
 							</td>
 							<td class="td-result" v-html="game.ResultTd">
@@ -191,9 +191,10 @@
 import { mapState,mapMutations } from 'vuex'
 import FootNav from '../../components/footNav'
 import HeadNav from '../../components/topNav'
-import{toThousands,httpPost,httpGet,createSign,dateFormat} from '../../data/util'
+import{toThousands,httpPost,httpGet,createSign} from '../../data/util'
 import{HTTP_URL_API} from '../../data/api'
 import { Toast,Indicator,MessageBox} from 'mint-ui'
+import moment from 'moment'
 export default{
 data(){
 	return{
@@ -227,8 +228,8 @@ methods:{
 	Thousands(val){
 		return toThousands(val)
 	},
-	DateFormat(val,format){
-		return dateFormat(val,format)
+	Moment(date,format){
+		return moment(date).format(format)
 	},
 	getGameList(__page){
 		let data={

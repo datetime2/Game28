@@ -120,7 +120,7 @@ methods:{
     },
     getStatics(){
        let data={
-            tikect:this.userInfo.tikect,
+            ticket:this.userInfo.ticket,
             userid:this.userInfo.userId,
             days:3
         }

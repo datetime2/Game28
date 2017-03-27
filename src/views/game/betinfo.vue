@@ -86,16 +86,16 @@
                         </li>
                         <li style="width: 100%">
                             <div>
-                                <button class="chips" title="" href="javascript:chips(10000)">10</button>
-                                <button class="chips" title="" href="javascript:chips(100000)">100</button>
-                                <button class="chips" title="" href="javascript:chips(300000)">300</button>
-                                <button class="chips" title="" href="javascript:chips(1000000)">1000</button>
+                                <button class="chips" @click="useSuohaQuoTaEvent(10000)">10</button>
+                                <button class="chips" @click="useSuohaQuoTaEvent(100000)">100</button>
+                                <button class="chips" @click="useSuohaQuoTaEvent(300000)">300</button>
+                                <button class="chips" @click="useSuohaQuoTaEvent(1000000)">1000</button>
                                 <div class="self">
                                     <div class="self1">
-                                        <input type="text" id="betsLeft" class="avinput">
+                                        <input type="text" id="betsLeft" class="avinput" readonly="readonly" v-model="fixedQuota">
                                     </div>
                                     <div class="self2">
-                                        <button @click="useBetAllEvent()">&nbsp;定额梭哈&nbsp;</button>
+                                        <button>&nbsp;定额梭哈&nbsp;</button>
                                     </div>
                                 </div>
                             </div>
@@ -165,6 +165,7 @@ data(){
         betTotalAmount:0,//投注总额
         checkboxArray:[],
         inputArray:[],
+        fixedQuota:'',
         defaultBetNumber:[],
         maxBetAmount:100000000,//最大投注额度(此处写死,生产环境请读取系统配置)
         minBetAmount:100//最小投注额度(此处写死,生产环境请读取系统配置)
@@ -196,7 +197,31 @@ methods:{
         this.betTotalAmount=0
     },//清除
     useSuohaEvent(){
-
+        let tmpChkArray=this.checkboxArray,
+            tmpIptArray=[],
+            tmpBetTotal=0,
+            userMaxBetAmount=this.userInfo.amount>this.maxBetAmount?this.maxBetAmount:this.userInfo.amount
+        this.inputArray.forEach((value)=>{
+            if(value){
+                tmpBetTotal+=parseInt(value)
+            }
+        })
+        tmpChkArray.forEach((value,index)=>{
+            if(value){
+                tmpIptArray.push(Math.floor(userMaxBetAmount / tmpBetTotal * parseInt(this.inputArray[index]))+'')
+            }
+            else{
+                tmpIptArray.push('')
+            }
+        })
+        tmpBetTotal=0
+        tmpIptArray.forEach((value)=>{
+            if(value){
+                tmpBetTotal+=parseInt(value)
+            }
+        })
+        this.inputArray=tmpIptArray
+        this.betTotalAmount=tmpBetTotal
     },//不超最大投注额梭哈
     useModelEvent(__model){
         let tmpChkArray=[],
@@ -299,9 +324,32 @@ methods:{
         this.betTotalAmount=tmpBetTotal
     },//按钮模式选择
     butRateEvent(__index,__rate){
-        if(this.inputArray[__index]){
-
+        let tmpIptArray=[],tmpBetTotal=0,tmpChkArray=this.checkboxArray
+        for(let i=0;i<this.inputArray.length;i++)
+        {
+            if(i==__index && this.inputArray[i]){
+                let tmpNumber=parseInt(this.inputArray[i])*__rate
+                if(tmpNumber>1){
+                    let plusNumber=Math.floor(tmpNumber)
+                    tmpIptArray.push(plusNumber+'')
+                }
+                else{
+                    tmpIptArray.push('')
+                    tmpChkArray[i]=false
+                }
+            }
+            else{
+                tmpIptArray.push(this.inputArray[i])
+            }
         }
+        tmpIptArray.forEach((value)=>{
+            if(value){
+                tmpBetTotal+=parseInt(value)
+            }
+        })
+        this.checkboxArray=tmpChkArray
+        this.inputArray=tmpIptArray
+        this.betTotalAmount=tmpBetTotal
     },//按钮加倍(单个)
     betDoubleEvent(__rate){
         let tmpIptArray=[],tmpBetTotal=0,tmpChkArray=this.checkboxArray
@@ -382,8 +430,32 @@ methods:{
             this.checkboxArray=tmpChkArray
         }
     },//手动输入框修改
-    useBetAllEvent(){
-
+    useSuohaQuoTaEvent(__amount){
+        let tmpChkArray=this.checkboxArray,
+            tmpIptArray=[],
+            tmpBetTotal=0
+        this.inputArray.forEach((value)=>{
+            if(value){
+                tmpBetTotal+=parseInt(value)
+            }
+        })
+        tmpChkArray.forEach((value,index)=>{
+            if(value){
+                tmpIptArray.push(Math.floor(__amount / tmpBetTotal * parseInt(this.inputArray[index]))+'')
+            }
+            else{
+                tmpIptArray.push('')
+            }
+        })
+        tmpBetTotal=0
+        tmpIptArray.forEach((value)=>{
+            if(value){
+                tmpBetTotal+=parseInt(value)
+            }
+        })
+        this.fixedQuota=__amount
+        this.inputArray=tmpIptArray
+        this.betTotalAmount=tmpBetTotal
     },//定额梭哈(<最大投注额 <用户可用余额)
     unSelectEvent(){
         let tmpIptArray=[],tmpBetTotal=0,tmpChkArray=[],
@@ -427,6 +499,10 @@ methods:{
             Toast('骚年..不够,多投点')
             return;
         }
+        if(this.betTotalAmount>this.userInfo.amount){
+            Toast('骚年..钱不够就不要玩了')
+            return;            
+        }
         var data = {
             gtype: this.code,
             ticket:this.userInfo.ticket,
@@ -437,7 +513,7 @@ methods:{
             datatype: "json",
             zone: -8
         }
-        MessageBox.confirm('骚年..确定投注: '+this.betTotalAmount+' 金币?').then(action => {
+        MessageBox.confirm('骚年..确定投注: '+this.Thousands(this.betTotalAmount)+' 金币?').then(action => {
             httpPost(HTTP_URL_API.GAME_BETINFO,createSign(data)).then((res)=>{
                 if(res){
                     if(res.data.code!=0){

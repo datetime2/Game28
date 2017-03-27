@@ -3,8 +3,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 export default new Router({
   routes: [
-    { path: '/', name: 'loading', component: require('../views/loading') },
-    { path: '/index', name: 'index', component: require('../views/index')},
+    { path: '/', name: 'index', component: require('../views/index')},
     { path: '/game', name: 'game', component: require('../views/game/index') },
     { path: '/game/detail/:type/:code/:text', name: 'detail', component: require('../views/game/detail'),meta: { requiresAuth: true }},
     { path: '/game/statics/:type/:code/:text', name: 'statics', component: require('../views/game/statics'),meta: { requiresAuth: true }},

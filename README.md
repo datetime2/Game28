@@ -1,9 +1,6 @@
 # tools
 
-> vue2 project
-
-
-
+> 基于vue2全家桶开发的webapp项目
 ## Build Setup
 
 ``` bash

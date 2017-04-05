@@ -158,27 +158,11 @@
 						</tr>
 					</tbody>
 				</table>
-				<div class="pagetable" v-show="!gameList">
-					<div class="Paging">
-						<span class="preimg">
-							<img src="../../assets/images/game/prebtn.png">
-						</span>
-						<span id="currentpage" class="pageindex">
-							1
-						</span>
-						&nbsp;
-						<a class="pagenum" href="javascript:ajax_page(2)">
-							2
-						</a>
-						&nbsp;
-						<a class="pagenum" href="javascript:ajax_page(3)">
-							3
-						</a>
-						&nbsp;
-						<a href="javascript:ajax_page(2)">
-							<img src="../../assets/images/game/nextbtn.png">
-						</a>
-					</div>
+				<div class="pagetable">
+				    <pagination :current-page="current"
+                :total-pages="total"
+                @page-changed="getGameList">
+    </pagination>
 				</div>
 			</div>
 		</div>
@@ -191,6 +175,7 @@
 import { mapState,mapMutations } from 'vuex'
 import FootNav from '../../components/footNav'
 import HeadNav from '../../components/topNav'
+import pagination from '../../components/pagination'
 import{toThousands,httpPost,httpGet,createSign} from '../../data/util'
 import{HTTP_URL_API} from '../../data/api'
 import { Toast,Indicator,MessageBox} from 'mint-ui'
@@ -204,9 +189,10 @@ data(){
 		gameList:[],
 		currentGame:{},
 		userBet:{},
-		page:1,
 		currentGameTimer:'第<i> 000000 </i>期 还有<em> 000 </em>秒停止下注!',
-		autoRefushTimer:''
+		autoRefushTimer:'',
+		current:1,
+		total:256
 	}
 },	
 created () {
@@ -218,7 +204,7 @@ computed: mapState({
 	globalTimer:state=>state.globalTimer
   }),
 mounted(){
-	this.getGameList(this.page)			
+	this.getGameList(this.current)			
 },   
 methods:{
     ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT','GLOBAL_TIMER','USER_CHANGE','USER_LOGOUT']),
@@ -233,6 +219,7 @@ methods:{
 		return moment(date).format(format)
 	},
 	getGameList(__page){
+		this.current=__page
 		let data={
 			c:this.code,
 			t:this.type,
@@ -332,7 +319,7 @@ methods:{
 		clearTimeout(mySelf.autoRefushTimer);
 	}
   },
-  components: {HeadNav,FootNav}
+  components: {HeadNav,FootNav,pagination}
 }
 </script>
 <style>
@@ -355,13 +342,7 @@ methods:{
 .bordered{background:#FFF;color:#555555;font-size:.6rem;border-spacing: 0;width:100%;}
 table th{background:#e93f40;color:#FFF}
 table td{border:1px solid #ccc;border-top:none;border-left:none}
-.pagetable{font-family:"Microsoft Yahei",Georgia,"Times New Roman",Times,serif;margin-top:2%;margin-bottom:2%;text-align:center}
-.qihao{font-size:.85rem;color:#f10808}
-.Paging{font-size:.75rem;margin:0;padding:0;vertical-align:middle;width:100%}
-.preimg{padding-right:5px}
-.pageindex{border-radius:50%;-moz-border-radius:50%;-webkit-border-radius:50%;text-align:center;width:23px;height:23px;display:inline-block;margin:0;padding:0;color:#FFF;background-image:-moz-linear-gradient(top,#64b7c5,#52a5b5);background-image:-webkit-gradient(linear,left top,left bottom,from(#64b7c5),to(#52a5b5));filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#64b7c5,endColorstr=#52a5b5);-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#64b7c5,endColorstr=#52a5b5)";-moz-box-shadow:1px 1px 1px #012126 inset;-webkit-box-shadow:1px 1px 1px #012126 inset;box-shadow:1px 1px 1px #012126 inset}
-.Paging img{vertical-align:bottom;width:23%}
-.pagenum{color:#333333;background-image:-moz-linear-gradient(top,#fff,#eaeaea);background-image:-webkit-gradient(linear,left top,left bottom,from(#fff),to(#eaeaea));filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#fff,endColorstr=#eaeaea);-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#fff,endColorstr=#eaeaea)";border-radius:50%;-moz-border-radius:50%;-webkit-border-radius:50%;text-align:center;width:22px;height:22px;display:inline-block;margin:0;padding:0;-webkit-box-shadow:1px 1px 1px rgba(0,0,0,0.5);-moz-box-shadow:1px 1px 1px rgba(0,0,0,0.5);box-shadow:1px 1px 1px rgba(0,0,0,0.5);filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=3,OffY=3,Color='gray');-ms-filter:"progid:DXImageTransform.Microsoft.dropshadow(OffX=3,OffY=3,Color='gray')"}
+.pagetable{font-family:"Microsoft Yahei",Georgia,"Times New Roman",Times,serif;margin-top:2%;margin-bottom:2%;text-align:center;font-size:.6rem;}
 .kj_r{background:#e64047 none repeat scroll 0 0;border-radius:50%;-moz-border-radius:50%;-webkit-border-radius:50%;color:#fff;display:block;font-weight:bold;text-align:center;width:20px;margin-left:1%}
 .kj_l{margin-left:8%}
 .kj_l,.kj_r{float:left;height:20px;line-height:20px}

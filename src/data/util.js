@@ -113,11 +113,16 @@ export const inArray = (_element, _array) => {
         return false;
     }
 }
+//数字对比
+export const lowerBound = (num, limit) => {
+    return num >= limit ? num : limit
+}
 export default {
     toThousands,
     createSign,
     httpPost,
     httpGet,
     inArray,
-    dateFormat
+    dateFormat,
+    lowerBound
 }

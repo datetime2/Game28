@@ -83,7 +83,8 @@
 				</div>
 				<div class="div_2">
 					<ul>
-						<li>今日｜盈亏:<i>{{Thousands(userBet.Shares)}}</i>,参与:<i>{{userBet.Periods}}</i>,胜率:<i>{{userBet.Rate}}%</i></li>
+						<li v-if="userBet">今日｜盈亏:<i>{{Thousands(userBet.Shares)}}</i>,参与:<i>{{userBet.Periods}}</i>,胜率:<i>{{userBet.Rate}}%</i></li>
+						<li v-else>今日｜盈亏:<i>0.00</i>,参与:<i>0</i>,胜率:<i>0.00%</i></li>
 					</ul>
 				</div>
 				<div class="div_3">
@@ -158,11 +159,8 @@
 						</tr>
 					</tbody>
 				</table>
-				<div class="pagetable">
-				    <pagination :current-page="current"
-                :total-pages="total"
-                @page-changed="getGameList">
-    </pagination>
+				<div class="pagetable" v-show="total>1">
+				    <pagination :current-page="current" :total-pages="total" @page-changed="getGameList"></pagination>
 				</div>
 			</div>
 		</div>
@@ -192,7 +190,7 @@ data(){
 		currentGameTimer:'第<i> 000000 </i>期 还有<em> 000 </em>秒停止下注!',
 		autoRefushTimer:'',
 		current:1,
-		total:256
+		total:1
 	}
 },	
 created () {
@@ -232,6 +230,7 @@ methods:{
 		.then((res)=>{
 			Indicator.close()
 			if(res){
+				this.total=res.data.Game.Pages
 				this.gameList=res.data.Game.List
 				this.userBet=res.data.Game.User
 				this.currentGame=res.data.Game.Current

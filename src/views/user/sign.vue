@@ -23,7 +23,7 @@
                 <li>4.根据"连续签到"和"VIP等级"决定签到领到的金币数量。</li>
                 <li>5.连续签到可以获得基数乘以天数的奖励（最多计10天），中断则从头计算天数！</li>
                 <li>
-                <mt-button type="danger" size="large" :disabled="isSignin" @click="userSignEvent">签到</mt-button>
+                <mt-button :type="butType" size="large" :disabled="isSignin" @click="userSignEvent">{{signText}}</mt-button>
                 </li>
             </ul>
         </div>
@@ -44,7 +44,9 @@ import Util from '../../data/util'
 export default{
 data(){
   return{
-    isSignin:false
+    isSignin:false,
+    signText:'签到',
+    butType:'danger'
   }
 },  
 created () {
@@ -71,6 +73,8 @@ methods:{
       Util.httpPost(HTTP_URL_API.USER_SIGNIN,Util.createSign(user)).then((res)=>{
         if(res && res.data.code==0){
           this.isSignin=true
+          this.signText='已签到'
+          this.butType='default'
           Toast('签到成功 +'+res.data.data)
         }
         else{
@@ -86,8 +90,11 @@ methods:{
           lang:'cn'
       }
       Util.httpPost(HTTP_URL_API.USER_ISSIGN,Util.createSign(user)).then((res)=>{
-        if(res && res.data.data)
+        if(res && res.data.data){
           this.isSignin=true
+          this.signText='已签到'
+          this.butType='default'
+        }
       })
     }
   },

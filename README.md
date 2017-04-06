@@ -1,9 +1,16 @@
 # Vue2 HCT
 
-> 基于vue2全家桶开发的webapp项目
+> 基于vue2全家桶开发的28类webapp游戏
 
+![Alt text](https://github.com/datetime2/HCT/static/1 (1).png)
 
-![Alt text](https://github.com/chenyufeng1991/NewsClient/raw/master/Screenshots/2.png)
+![Alt text](https://github.com/datetime2/HCT/static/1 (2).png)
+
+![Alt text](https://github.com/datetime2/HCT/static/1 (3).png)
+
+![Alt text](https://github.com/datetime2/HCT/static/2.png)
+
+![Alt text](https://github.com/datetime2/HCT/static/3.png)
 ## Build Setup
 
 ``` bash

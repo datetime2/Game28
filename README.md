@@ -2,15 +2,15 @@
 
 > 基于vue2全家桶开发的28类webapp游戏
 
-![Alt text](https://github.com/datetime2/HCT/tree/master/static/1 (1).png)
+![Alt text](https://github.com/datetime2/HCT/raw/master/static/1 (1).png)
 
-![Alt text](https://github.com/datetime2/HCT/tree/master/static/1 (2).png)
+![Alt text](https://github.com/datetime2/HCT/raw/master/static/1 (2).png)
 
-![Alt text](https://github.com/datetime2/HCT/tree/master/static/1 (3).png)
+![Alt text](https://github.com/datetime2/HCT/raw/master/static/1 (3).png)
 
-![Alt text](https://github.com/datetime2/HCT/tree/master/static/2.png)
+![Alt text](https://github.com/datetime2/HCT/raw/master/static/2.png)
 
-![Alt text](https://github.com/datetime2/HCT/tree/master/static/3.png)
+![Alt text](https://github.com/datetime2/HCT/raw/master/static/3.png)
 ## Build Setup
 
 ``` bash

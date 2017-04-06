@@ -70,7 +70,8 @@ methods:{
           ticket:this.userInfo.ticket,
           lang:'cn'
       }
-      Util.httpPost(HTTP_URL_API.USER_SIGNIN,Util.createSign(user)).then((res)=>{
+      Util.httpPost(HTTP_URL_API.USER_SIGNIN,Util.createSign(user))
+      .then((res)=>{
         if(res && res.data.code==0){
           this.isSignin=true
           this.signText='已签到'
@@ -81,7 +82,6 @@ methods:{
           Toast('签到失败')
         }
       })      
-      
     },
     checkUserSign(){
       let user={

@@ -12,7 +12,7 @@
               </router-link>
             </li>
             <li>
-          <router-link :to="{name:'record',params:{type:type,text:title}}">
+              <router-link :to="{name:'record',params:{type:type,text:title}}">
                 <span class="">
                   记录
                 </span>

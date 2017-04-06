@@ -40,11 +40,11 @@
               </router-link>
             </li>
             <li>
-              <a href="/m/bj16/Trend/">
+              <router-link :to="{name:'trend',params:{title:title}}">
                 <span class="">
                   走势
                 </span>
-              </a>
+              </router-link>
             </li>
           </ul>
         </div>
@@ -68,38 +68,82 @@
                             详情
                         </th>
                     </tr>
+                    <tr v-for="record in recordList">
+                      <td>{{record.TermNumber}}</td>
+                      <td v-html="record.ResultTd"></td>
+                      <td>{{Thousands(record.BetMoney)}}</td>
+                      <td>{{Thousands(record.GetMoney)}}</td>
+                      <td>
+                        <router-link :to="{name:'record',params:{type:type,text:title}}">
+                            详情
+                        </router-link>
+                      </td>
+                    </tr>
                 </tbody>
             </table>
-            <div class="pagetable">
-            </div>
+            <div class="pagetable" v-show="total>1">
+				      <pagination :current-page="page" :total-pages="total" @page-changed="getRecord"></pagination>
+				    </div>
         </div>        
     </div>
     <FootNav></FootNav>
   </div>
 </template>
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations,mapState } from 'vuex'
 import FootNav from '../../components/footNav'
 import HeadNav from '../../components/topNav'
+import pagination from '../../components/pagination'
 import { TabContainer, TabContainerItem } from 'mint-ui'
+import Util from '../../data/util'
+import {HTTP_URL_API} from '../../data/api'
 export default{
 data(){
     return {
         title:this.$route.params['text'],
-        type:this.$route.params['type']
+        type:this.$route.params['type'],
+        page:1,
+        total:1,
+        recordList:[]
     }
 },    
 created () {
     this.setTitle()
-  },     
+  },   
+computed: mapState({
+    userInfo: state => state.userInfo
+}), 
+mounted(){
+	this.getRecord(this.page)			
+},   
 methods:{
     ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT']),
     setTitle(){
         this.CHANGE_TITLE(this.title)
         this.SHOW_BACK_BUT(true)
-    }
+    },
+    getRecord(__page){
+      this.page=__page
+      let data={
+				userid:this.userInfo.userId,
+				ticket:this.userInfo.ticket,
+				lang:'cn',
+        size:15,
+        code:this.$route.params['code'],
+        page:__page
+			}
+      Util.httpPost(HTTP_URL_API.GAME_BETRECORD,Util.createSign(data)).then((res)=>{
+            if(res){
+              this.recordList=res.data.data.List
+              this.total=res.data.data.Total
+            }
+      })
+    },
+    Thousands(val){
+		  return Util.toThousands(val)
+	  }
   },
-  components: {HeadNav,FootNav,TabContainer,TabContainerItem}
+  components: {HeadNav,FootNav,pagination}
 }
 </script>
 <style scoped>

@@ -1,6 +1,7 @@
-# Vue2 HCT
+# Game28 WebApp
 
-> 基于vue2全家桶开发的28类webapp游戏
+> 基于vue2.js 全家桶开发的28类webapp游戏
+  
 
 ![Alt text](https://github.com/datetime2/HCT/raw/master/static/1.1.png)
 

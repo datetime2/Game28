@@ -80,7 +80,7 @@ methods:{
                         if(res.data.code==98 || res.data.code==99){
                             this.USER_LOGOUT()
                             let instance = Toast('登录信息已失效')
-                                setTimeout(() => {
+                            setTimeout(() => {
                                 instance.close()
                                 this.$router.push({
                                         name: 'login'

@@ -1,5 +1,6 @@
 import md5 from 'md5'
 import axios from 'axios'
+import {Toast,Indicator} from 'mint-ui'
 const signKey = 'ZD4417JEFFDDSCC50H3FAE3C787D0E23'
 //金额显示转换
 export const toThousands = (value) => {
@@ -96,7 +97,8 @@ export const httpGet = (_apiUrl, _params) => {
         axios.get(_apiUrl, { params: _params }).then(function (response) {
             resolve(response)
         }).catch(function (error) {
-            console.log(error)
+            Indicator.close()
+            Toast('数据获取异常')
             reject(error)
         })
     })

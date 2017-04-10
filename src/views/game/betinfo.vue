@@ -81,7 +81,7 @@
                                 <button class="tzms ora" @click="unSelectEvent()">反选</button>
                                 <button class="tzms ora" @click="initSelectEvent()">清除</button>
                                 <button class="tzms ora" @click="getNearTermEvent('1006',813909)">上期</button>
-                                <button class="tzms morebtn">模式</button>
+                                <button class="tzms morebtn" @click="popupVisible=true">模式</button>
                             </div>
                         </li>
                         <li style="width: 100%">
@@ -145,12 +145,15 @@
           <a @click="submitBet" class="tzb">确认投注</a>     
       </div>           
     </mt-tabbar>
+    <mt-popup v-model="popupVisible" position="right" class="mint-popup">
+        <mt-button @click.native="popupVisible = false" size="small" type="danger">关闭</mt-button>
+    </mt-popup>
   </div>
 </template>
 <script>
 import { mapMutations,mapState } from 'vuex'
 import HeadNav from '../../components/topNav'
-import{Toast,MessageBox} from 'mint-ui'
+import{Toast,MessageBox,Popup} from 'mint-ui'
 import{HTTP_URL_API} from '../../data/api'
 import {DEFAULT_BET_NUMBER} from '../../data'
 import {httpPost,createSign,toThousands} from '../../data/util'
@@ -168,7 +171,9 @@ data(){
         fixedQuota:'',
         defaultBetNumber:[],
         maxBetAmount:100000000,//最大投注额度(此处写死,生产环境请读取系统配置)
-        minBetAmount:100//最小投注额度(此处写死,生产环境请读取系统配置)
+        minBetAmount:100,//最小投注额度(此处写死,生产环境请读取系统配置)
+        popupVisible:false,
+        popupVisible3:true
     }
 },    
 created () {
@@ -558,7 +563,7 @@ methods:{
     },//获取上一期投注信息
 	Thousands(val){
 		return toThousands(val)
-	} 
+	}
   },
   components: {HeadNav}
 }
@@ -582,6 +587,7 @@ methods:{
 .tzms{margin:1% 1.5% 1% 0;border:1px solid #a3a3a3;font-size:.75rem;line-height:1.5rem;height:1.5rem;width:15%;float:left;text-align:center;background-image:-moz-linear-gradient(top,#FDFDFE,#F2F4F6);background-image:-webkit-gradient(linear,left top,left bottom,from(#FDFDFE),to(#F2F4F6));filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#FDFDFE,endColorstr=#F2F4F6);-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#FDFDFE,endColorstr=#F2F4F6)";-webkit-box-shadow:1px 1px 1px rgba(0,0,0,0.2);-moz-box-shadow:1px 1px 1px rgba(0,0,0,0.2);box-shadow:1px 1px 1px rgba(0,0,0,0.2)}
 .chips{margin:1% 1% 1% 0;border:1px solid #ccc;font-size:.75rem;line-height:1.5rem;height:1.5rem;width:12.5%;float:left;text-align:center;background-image:-moz-linear-gradient(top,#FDFDFE,#F2F4F6);background-image:-webkit-gradient(linear,left top,left bottom,from(#FDFDFE),to(#F2F4F6));filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#FDFDFE,endColorstr=#F2F4F6);-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#FDFDFE,endColorstr=#F2F4F6)";-webkit-box-shadow:1px 1px 1px rgba(0,0,0,0.2);-moz-box-shadow:1px 1px 1px rgba(0,0,0,0.2);box-shadow:1px 1px 1px rgba(0,0,0,0.2)}
 .self{margin:1% 0;border:1px solid #ccc;color:#8b5100;float:left;line-height:150%;height:150%;padding:0px;width:43%}
+.morebtn{color:#fff;background-image:-webkit-gradient(linear,left top,left bottom,from(#F2605F),to(#D73F3E));filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#F2605F,endColorstr=#D73F3E);-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#F2605F,endColorstr=#D73F3E)"}
 .self1{width:50%;float:left}
 .avinput{border:medium none;color:#f00;line-height:150%;height:150%;width:100%;padding-left:1%}
 .self2{float:right}
@@ -599,4 +605,6 @@ methods:{
 .mint-tabbar .tzl{width:80%;float:left;text-align: left;}
 .mint-tabbar .tzr{width:23%;float:right;margin-top:3%;}
 .mint-tabbar .tzr .tzb{float:right;color:#fff;background-color:#F05550;line-height:270%;margin:6% 6% 6% 6%;text-align:center;width:105%;border-radius:2px}
+.mint-popup{width:80%;height:75%;background-color:#32373b;opacity:0.95;position: fixed;}
+.mint-popup .mint-button{position:absolute;width:90%;top:95%;left:5%;transform:translateY(-50%)}
 </style>

@@ -59,7 +59,7 @@ computed: mapState({
     userInfo: state => state.userInfo
 }),   
 methods:{
-    ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT']),
+    ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT','USER_CHANGE']),
     setTitle(){
         this.CHANGE_TITLE('会员中心')
         this.SHOW_BACK_BUT(true)
@@ -76,6 +76,17 @@ methods:{
           this.isSignin=true
           this.signText='已签到'
           this.butType='default'
+          let users ={
+              userName: this.userInfo.userName,
+              nickName: this.userInfo.nickName,
+              userId: this.userInfo.userId,
+              ticket: this.userInfo.ticket,
+              amount: this.userInfo.amount+res.data.data,
+              cellPhone:this.userInfo.cellPhone,
+              bankAmount:this.userInfo.bankAmount,
+              email:this.userInfo.email
+                   }
+          this.USER_CHANGE(users)
           Toast('签到成功 +'+res.data.data)
         }
         else{

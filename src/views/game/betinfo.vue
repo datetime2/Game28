@@ -520,6 +520,17 @@ methods:{
                         Toast(res.data.message)  
                     }
                     else{
+                        let users ={
+                            userName: this.userInfo.userName,
+                            nickName: this.userInfo.nickName,
+                            userId: this.userInfo.userId,
+                            ticket: this.userInfo.ticket,
+                            amount: this.userInfo.amount-this.betTotalAmount,
+                            cellPhone:this.userInfo.cellPhone,
+                            bankAmount:this.userInfo.bankAmount,
+                            email:this.userInfo.email
+                        }
+                        this.USER_CHANGE(users)
                         var instance= Toast('骚年..投注成功')
                         let tmpIptArray=[],tmpChkArray=[]
                         this.defaultBetNumber.forEach((vaule,index)=>{
@@ -539,39 +550,6 @@ methods:{
                         }, 2000)
                     }
                 }
-            }).then(()=>{
-                let user={
-                    userid:this.userInfo.userId,
-                    ticket:this.userInfo.ticket,
-                    lang:'cn'
-                }
-                httpPost(HTTP_URL_API.USER_INFOMATION,createSign(user)).then((res)=>{
-                    if(res){
-                        if(res.data.code==0){
-                        let user ={
-                                userName: res.data.data.LoginName,
-                                nickName: res.data.data.NickName ? res.data.data.NickName : '',
-                                userId: res.data.data.Id,
-                                ticket: this.userInfo.ticket,
-                                amount: res.data.data.BalanceAmount,
-                                cellPhone:res.data.data.Phone,
-                                bankAmount:res.data.data.AccountAmount,
-                                email:res.data.data.email
-                            }
-                            this.USER_CHANGE(user)
-                        }
-                        if(res.data.code==98 || res.data.code==99){
-                            this.USER_LOGOUT()
-                            let instance = Toast('登录信息已失效')
-                                setTimeout(() => {
-                                instance.close()
-                                this.$router.push({
-                                        name: 'login'
-                                    })
-                            }, 2000)
-                        }
-                    }
-                })                
             })
 	    })
     },//确认投注

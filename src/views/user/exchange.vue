@@ -129,7 +129,7 @@
                 <button @click="iptBuyEvent('-')">-</button>
                 <input type="number" v-model="inpNumber" class="count" @keyup="iptBuyEvent('+')" maxlength="3">
                 <button @click="iptBuyEvent('+')">+</button>张
-                <br><span style="color:#d43c3b">总计:<span id="needg">{{totalAmout}}</span></span>
+                <br><span style="color:#d43c3b">总计:<span id="needg">{{Thousands(totalAmout)}}</span></span>
             </p>
             <p class="pr">
                 <input class="chgbtn exbtn" type="button" value="立即兑换" @click="exchangeEvent">
@@ -140,7 +140,7 @@
   </div>
 </template>
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations,mapState } from 'vuex'
 import FootNav from '../../components/footNav'
 import HeadNav from '../../components/topNav'
 import UcHeader from '../../components/ucHeader'
@@ -159,7 +159,10 @@ data(){
 },
 created () {
     this.setTitle()
-  },     
+  },   
+computed: mapState({
+    userInfo: state => state.userInfo
+}),      
 methods:{
     ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT','USER_CHANGE']),
     setTitle(){
@@ -193,11 +196,17 @@ methods:{
         this.inpNumber=number
     },
     exchangeEvent(){
-        if(this.totalAmout!=0 && this.chkNumber!=0){
-            MessageBox.confirm('大爷..确定投注: '+this.inpNumber+' 份?').then(action => {
-                //do 兑换业务
-            });
+        if(this.totalAmout==0 || this.chkNumber==0){
+             Toast('骚年,没选你兑换个毛')
+             return;            
         }
+        if(this.userInfo.amount<this.totalAmout){
+             Toast('臭逼,没钱你兑换个GG')
+             return;
+        }
+        MessageBox.confirm('大爷..确定兑换: '+this.inpNumber+' 份?').then(action => {
+            //do 兑换业务
+        });
     },
     Thousands(val){
 		return Util.toThousands(val)

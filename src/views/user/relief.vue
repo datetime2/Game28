@@ -46,7 +46,7 @@ computed: mapState({
     userInfo: state => state.userInfo
 }),   
 methods:{
-    ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT']),
+    ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT','USER_CHANGE']),
     setTitle(){
         this.CHANGE_TITLE('会员中心')
         this.SHOW_BACK_BUT(true)
@@ -77,10 +77,21 @@ methods:{
             this.isRelief=true
             this.reliefText='已领取'
             this.butType='default'
-            Toast('签到成功 +'+res.data.data)
+            let users ={
+              userName: this.userInfo.userName,
+              nickName: this.userInfo.nickName,
+              userId: this.userInfo.userId,
+              ticket: this.userInfo.ticket,
+              amount: this.userInfo.amount+100,
+              cellPhone:this.userInfo.cellPhone,
+              bankAmount:this.userInfo.bankAmount,
+              email:this.userInfo.email
+                   }
+            this.USER_CHANGE(users)
+            Toast('领取成功 +'+100)
           }
           else{
-            Toast('签到失败')
+            Toast('领取失败')
           }
         })  
       }

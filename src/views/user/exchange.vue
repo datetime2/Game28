@@ -14,111 +14,111 @@
             <div class="cl"></div>
         </div>
         <div class="exchangeinfodiv">
-                <ul onclick="selectCard(rd1)">
+                <ul @click="selectCardEvent(0)">
                     <a href="javascript:void(0)">
                         <img src="../../assets/images/game/50.png" width="100%">
                     </a>
                     <li class="award_title">移动充值卡50元</li>
-                    <li class="award_name "><i>V0：52,500</i></li>
-                    <li class="award_name "><i>V1：52,250</i></li>
-                    <li class="award_name "><i>V2：52,000</i></li>
-                    <li class="award_name "><i>V3：51,750</i></li>
-                    <li class="award_name "><i>V4：51,500</i></li>
-                    <li class="award_name "><i>V5：51,250</i></li>
-                    <li class="award_name "><i>V6：51,000</i></li>
-                    <li class="award_name on"><i>V7：50,000</i></li>
+                    <li class="award_name"><i>V0:52,500</i></li>
+                    <li class="award_name"><i>V1:52,250</i></li>
+                    <li class="award_name"><i>V2:52,000</i></li>
+                    <li class="award_name"><i>V3:51,750</i></li>
+                    <li class="award_name"><i>V4:51,500</i></li>
+                    <li class="award_name"><i>V5:51,250</i></li>
+                    <li class="award_name"><i>V6:51,000</i></li>
+                    <li class="award_name"><i>V7:50,000</i></li>
                     <li style="text-align: center">
-                        <input type="radio" class="radio" id="rd1" value="1" name="rdch" checked="checked" v="50000" onclick="addBuyNum()">
+                        <input type="radio" class="radio" value="0" name="rdch" v-model="radCheck[0]">
                         <label for="rd1">选此奖品</label>
                     </li>
                 </ul>
-                <ul onclick="selectCard(rd2)">
+                <ul @click="selectCardEvent(1)">
                     <a href="javascript:void(0)">
                         <img src="../../assets/images/game/100.png" width="100%">
                     </a>
                     <li class="award_title">移动充值卡100元</li>
-                    <li class="award_name "><i>V0：105,000</i></li>
-                    <li class="award_name "><i>V1：104,500</i></li>
-                    <li class="award_name "><i>V2：104,000</i></li>
-                    <li class="award_name "><i>V3：103,500</i></li>
-                    <li class="award_name "><i>V4：103,000</i></li>
-                    <li class="award_name "><i>V5：102,500</i></li>
-                    <li class="award_name "><i>V6：102,000</i></li>
-                    <li class="award_name on"><i>V7：100,000</i></li>
+                    <li class="award_name"><i>V0:105,000</i></li>
+                    <li class="award_name"><i>V1:104,500</i></li>
+                    <li class="award_name"><i>V2:104,000</i></li>
+                    <li class="award_name"><i>V3:103,500</i></li>
+                    <li class="award_name"><i>V4:103,000</i></li>
+                    <li class="award_name"><i>V5:102,500</i></li>
+                    <li class="award_name"><i>V6:102,000</i></li>
+                    <li class="award_name"><i>V7:100,000</i></li>
                     <li style="text-align: center">
-                        <input type="radio" class="radio" id="rd2" value="2" name="rdch" checked="checked" v="100000" onclick="addBuyNum()">
+                        <input type="radio" class="radio" value="1" name="rdch" v-model="radCheck[1]">
                         <label for="rd2">选此奖品</label>
                     </li>
                 </ul>
-                <ul onclick="selectCard(rd3)">
+                <ul @click="selectCardEvent(2)">
                     <a href="javascript:void(0)">
                         <img src="../../assets/images/game/500.png" width="100%">
                     </a>
                     <li class="award_title">移动充值卡500元</li>
-                    <li class="award_name "><i>V0：525,000</i></li>
-                    <li class="award_name "><i>V1：522,500</i></li>
-                    <li class="award_name "><i>V2：520,000</i></li>
-                    <li class="award_name "><i>V3：517,500</i></li>
-                    <li class="award_name "><i>V4：515,000</i></li>
-                    <li class="award_name "><i>V5：512,500</i></li>
-                    <li class="award_name "><i>V6：510,000</i></li>
-                    <li class="award_name on"><i>V7：500,000</i></li>
+                    <li class="award_name"><i>V0:525,000</i></li>
+                    <li class="award_name"><i>V1:522,500</i></li>
+                    <li class="award_name"><i>V2:520,000</i></li>
+                    <li class="award_name"><i>V3:517,500</i></li>
+                    <li class="award_name"><i>V4:515,000</i></li>
+                    <li class="award_name"><i>V5:512,500</i></li>
+                    <li class="award_name"><i>V6:510,000</i></li>
+                    <li class="award_name"><i>V7:500,000</i></li>
                     <li style="text-align: center">
-                        <input type="radio" class="radio" id="rd3" value="3" name="rdch" checked="checked" v="500000" onclick="addBuyNum()">
+                        <input type="radio" class="radio" value="2" name="rdch" v-model="radCheck[2]">
                         <label for="rd3">选此奖品</label>
                     </li>
                 </ul>
-                <ul onclick="selectCard(rd4)">
+                <ul @click="selectCardEvent(3)">
                     <a href="javascript:void(0)">
                         <img src="../../assets/images/game/1000.png" width="100%">
                     </a>
                     <li class="award_title">移动充值卡1000元</li>
-                    <li class="award_name "><i>V0：1,050,000</i></li>
-                    <li class="award_name "><i>V1：1,045,000</i></li>
-                    <li class="award_name "><i>V2：1,040,000</i></li>
-                    <li class="award_name "><i>V3：1,035,000</i></li>
-                    <li class="award_name "><i>V4：1,030,000</i></li>
-                    <li class="award_name "><i>V5：1,025,000</i></li>
-                    <li class="award_name "><i>V6：1,020,000</i></li>
-                    <li class="award_name on"><i>V7：1,000,000</i></li>
+                    <li class="award_name"><i>V0:1,050,000</i></li>
+                    <li class="award_name"><i>V1:1,045,000</i></li>
+                    <li class="award_name"><i>V2:1,040,000</i></li>
+                    <li class="award_name"><i>V3:1,035,000</i></li>
+                    <li class="award_name"><i>V4:1,030,000</i></li>
+                    <li class="award_name"><i>V5:1,025,000</i></li>
+                    <li class="award_name"><i>V6:1,020,000</i></li>
+                    <li class="award_name"><i>V7:1,000,000</i></li>
                     <li style="text-align: center">
-                        <input type="radio" class="radio" id="rd4" value="4" name="rdch" checked="checked" v="1000000" onclick="addBuyNum()">
+                        <input type="radio" class="radio" value="3" name="rdch" v-model="radCheck[3]">
                         <label for="rd4">选此奖品</label>
                     </li>
                 </ul>
-                <ul onclick="selectCard(rd5)">
+                <ul @click="selectCardEvent(4)">
                     <a href="javascript:void(0)">
                         <img src="../../assets/images/game/5000.png" width="100%">
                     </a>
                     <li class="award_title">移动充值卡5000元</li>
-                    <li class="award_name "><i>V0：5,250,000</i></li>
-                    <li class="award_name "><i>V1：5,225,000</i></li>
-                    <li class="award_name "><i>V2：5,200,000</i></li>
-                    <li class="award_name "><i>V3：5,175,000</i></li>
-                    <li class="award_name "><i>V4：5,150,000</i></li>
-                    <li class="award_name "><i>V5：5,125,000</i></li>
-                    <li class="award_name "><i>V6：5,100,000</i></li>
-                    <li class="award_name on"><i>V7：5,000,000</i></li>
+                    <li class="award_name"><i>V0:5,250,000</i></li>
+                    <li class="award_name"><i>V1:5,225,000</i></li>
+                    <li class="award_name"><i>V2:5,200,000</i></li>
+                    <li class="award_name"><i>V3:5,175,000</i></li>
+                    <li class="award_name"><i>V4:5,150,000</i></li>
+                    <li class="award_name"><i>V5:5,125,000</i></li>
+                    <li class="award_name"><i>V6:5,100,000</i></li>
+                    <li class="award_name"><i>V7:5,000,000</i></li>
                     <li style="text-align: center">
-                        <input type="radio" class="radio" id="rd5" value="5" name="rdch" checked="checked" v="5000000" onclick="addBuyNum()">
+                        <input type="radio" class="radio" value="4" name="rdch" v-model="radCheck[4]">
                         <label for="rd5">选此奖品</label>
                     </li>
                 </ul>
-                <ul onclick="selectCard(rd6)">
+                <ul @click="selectCardEvent(5)">
                     <a href="javascript:void(0)">
                         <img src="../../assets/images/game/10000.png" width="100%">
                     </a>
                     <li class="award_title">移动充值卡10000元</li>
-                    <li class="award_name "><i>V0：10,500,000</i></li>
-                    <li class="award_name "><i>V1：10,450,000</i></li>
-                    <li class="award_name "><i>V2：10,400,000</i></li>
-                    <li class="award_name "><i>V3：10,350,000</i></li>
-                    <li class="award_name "><i>V4：10,300,000</i></li>
-                    <li class="award_name "><i>V5：10,250,000</i></li>
-                    <li class="award_name "><i>V6：10,200,000</i></li>
-                    <li class="award_name on"><i>V7：10,000,000</i></li>
+                    <li class="award_name"><i>V0:10,500,000</i></li>
+                    <li class="award_name"><i>V1:10,450,000</i></li>
+                    <li class="award_name"><i>V2:10,400,000</i></li>
+                    <li class="award_name"><i>V3:10,350,000</i></li>
+                    <li class="award_name"><i>V4:10,300,000</i></li>
+                    <li class="award_name"><i>V5:10,250,000</i></li>
+                    <li class="award_name"><i>V6:10,200,000</i></li>
+                    <li class="award_name"><i>V7:10,000,000</i></li>
                     <li style="text-align: center">
-                        <input type="radio" class="radio" id="rd6" value="6" name="rdch" checked="checked" v="10000000" onclick="addBuyNum()">
+                        <input type="radio" class="radio" value="5" name="rdch" v-model="radCheck[5]">
                         <label for="rd6">选此奖品</label>
                     </li>
                 </ul>
@@ -126,13 +126,13 @@
         <div class="exchangeinfodiv" style="clear: both">
             <p class="pl">
                 兑换
-                <a onclick="addBuyNum('-')" href="javascript:;"><img src="../../assets/images/game/minus.png"></a>
-                <input type="text" value="0" name="" id="examount" class="count" onkeyup="addBuyNum()" maxlength="3">
-                <a onclick="addBuyNum('+')" href="javascript:;"><img src="../../assets/images/game/add.png"></a> 张
-                <br><span style="color: #d43c3b">总计：<span id="needg">0</span></span>
+                <button @click="iptBuyEvent('-')">-</button>
+                <input type="number" v-model="inpNumber" class="count" @keyup="iptBuyEvent('+')" maxlength="3">
+                <button @click="iptBuyEvent('+')">+</button>张
+                <br><span style="color:#d43c3b">总计:<span id="needg">{{totalAmout}}</span></span>
             </p>
             <p class="pr">
-                <input class="chgbtn exbtn" type="button" value="立即兑换" id="exbtn">
+                <input class="chgbtn exbtn" type="button" value="立即兑换" @click="exchangeEvent">
             </p>
         </div>
     </div>
@@ -144,21 +144,64 @@ import { mapMutations } from 'vuex'
 import FootNav from '../../components/footNav'
 import HeadNav from '../../components/topNav'
 import UcHeader from '../../components/ucHeader'
+import{Toast,MessageBox,Popup} from 'mint-ui'
+import Util from '../../data/util'
 export default{
 data(){
   return{
-    changeList:[]
+    changeList:[],
+    radCheck:['-1','-1','-1','-1','-1','-1'],
+    excAmount:[50000,100000,500000,1000000,5000000,10000000],
+    inpNumber:0,
+    chkNumber:-1,
+    totalAmout:0
   }
 },
 created () {
     this.setTitle()
   },     
 methods:{
-    ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT']),
+    ...mapMutations(['CHANGE_TITLE','SHOW_BACK_BUT','USER_CHANGE']),
     setTitle(){
         this.CHANGE_TITLE('会员中心')
         this.SHOW_BACK_BUT(true)
-    }
+    },
+    selectCardEvent(__index){
+        this.radCheck.forEach((value,index)=>{
+            if(index==__index){
+                this.radCheck.splice(__index,1,__index+'')
+                this.chkNumber=__index
+                this.inpNumber=1
+                }
+            else{
+                this.radCheck.splice(index,1,'-1')
+            }
+        });
+        this.totalAmout=this.chkNumber==-1?0:parseFloat(this.excAmount[this.chkNumber])*parseInt(this.inpNumber)
+    },
+    iptBuyEvent(__ipx){
+        let number=parseInt(this.inpNumber)
+        switch(__ipx){
+            case '+':
+                number++
+            break;
+            default:
+                number==0?0:number--
+            break;
+        }
+        this.totalAmout=this.chkNumber==-1?0:parseFloat(this.excAmount[this.chkNumber])*number
+        this.inpNumber=number
+    },
+    exchangeEvent(){
+        if(this.totalAmout!=0 && this.chkNumber!=0){
+            MessageBox.confirm('大爷..确定投注: '+this.inpNumber+' 份?').then(action => {
+                //do 兑换业务
+            });
+        }
+    },
+    Thousands(val){
+		return Util.toThousands(val)
+	}
   },
   components: {HeadNav,FootNav,UcHeader}
 }
@@ -181,15 +224,15 @@ methods:{
 .fl{float:left}
 .memberinfodiv .title .title_content .t_2{margin:0;padding:0;color:#888888;font-size:100%}
 .memberinfodiv .title .title_content .t_1{margin:0;padding:0;color:#333333;font-size:120%}
-.exchangeinfodiv ul{width:23%;margin:1%;float:left;overflow:hidden;padding:0}
+.exchangeinfodiv ul{width:23%;margin:1%;float:left;overflow:hidden;padding:0;height:16rem;}
 .exchangeinfodiv ul li{list-style:none;}
-.exchangeinfodiv ul li.award_title{height:180%;line-height:180%;text-align:center;color:#313131;background:#ededed;margin:1% 0;font-size:.6rem;font-weight:bold}
-.exchangeinfodiv ul li.award_name{height:120%;line-height:120%;text-align:center;color:#ff0000;background:#ededed;margin:3% 0}
-.exchangeinfodiv ul li{width:100%;font-size:.7rem;font-family:Arial}
+.exchangeinfodiv ul li.award_title{height:1.2rem;line-height:1.2rem;text-align:center;color:#313131;background:#ededed;margin:1% 0;font-size:.6rem;}
+.exchangeinfodiv ul li.award_name{height:1rem;line-height:1rem;text-align:center;color:#ff0000;background:#ededed;margin:3% 0}
+.exchangeinfodiv ul li{width:100%;font-size:.65rem;font-family:Arial}
 .exchangeinfodiv p.pl{font-size:80%;margin-left:1%;width:45%;float:left;text-align:center}
 .exchangeinfodiv p.pr{width:40%;float:left;text-align:center;margin-top:3.5%}
 .exchangeinfodiv p input.count{border:1px solid #707070;color:#000;display:inline-block;font-size:100%;height:180%;line-height:180%;text-align:center;width:40%;border-left:none;border-right:none}
 .exchangeinfodiv p.pl img{width:13%;vertical-align:top;}
-.exchangeinfodiv p.pr .exbtn{width:85%;text-align:center;font-size:120%}
+.exchangeinfodiv p.pr .exbtn{width:85%;text-align:center;font-size:120%;border:none;}
 input.chgbtn{color:#FFF;cursor:pointer;background-image: -webkit-gradient(linear, left top, left bottom, from(#f65543), to(#e93d29));}
 </style>

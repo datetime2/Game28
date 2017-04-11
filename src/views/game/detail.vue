@@ -258,10 +258,10 @@ methods:{
 						this.USER_CHANGE(user)
 					}
 					if(res.data.code==98 || res.data.code==99){
-						this.USER_LOGOUT()
 						let instance = Toast('登录信息已失效')
 							setTimeout(() => {
 							instance.close()
+							this.USER_LOGOUT()
 							this.$router.push({
                     				name: 'login',
 									query:{redirect:'/game/detail/'+this.type+'/'+this.code+'/'+this.text}
@@ -312,6 +312,9 @@ methods:{
                 }
 			// mySelf.getGameList(1)
 		},1000)
+
+
+		
 	},
 	clearTimerRefush(){
 		let mySelf=this

@@ -172,8 +172,7 @@ data(){
         defaultBetNumber:[],
         maxBetAmount:100000000,//最大投注额度(此处写死,生产环境请读取系统配置)
         minBetAmount:100,//最小投注额度(此处写死,生产环境请读取系统配置)
-        popupVisible:false,
-        popupVisible3:true
+        popupVisible:false
     }
 },    
 created () {
@@ -386,20 +385,11 @@ methods:{
         this.checkboxArray=tmpChkArray
     },//加倍(全部)
     chgRateCheckEvent(__index){
-        let tmpIptArray=[],tmpBetTotal=0,tmpChkArray=[],
+        let tmpIptArray=this.inputArray,tmpBetTotal=0,tmpChkArray=this.checkboxArray,
             defaultBetAmount=DEFAULT_BET_NUMBER[this.code].split(',');
-        for(let i=0;i<defaultBetAmount.length;i++){
-            let curChk=this.checkboxArray[i],
-                curIpt=this.inputArray[i]
-            if(i==__index){
-                tmpChkArray.push(!curChk)
-                tmpIptArray.push(!curChk?defaultBetAmount[i]:'')
-            }
-            else{
-                tmpChkArray.push(curChk)
-                tmpIptArray.push(curIpt)
-            }
-        }
+        let curChk=tmpChkArray[__index],curIpt=tmpIptArray[__index];
+        tmpChkArray.splice(__index,1,!curChk);
+        tmpIptArray.splice(__index,1,!curChk?defaultBetAmount[__index]:'');
         tmpIptArray.forEach((value)=>{
             if(value){
                 tmpBetTotal+=parseInt(value)
@@ -410,30 +400,25 @@ methods:{
         this.checkboxArray=tmpChkArray
     },//手动选择框修改
     chgRateInputEvent(__index){
-        let tmpIptArray=[],tmpBetTotal=0,tmpChkArray=[],
+        let tmpIptArray=this.inputArray,tmpBetTotal=0,tmpChkArray=this.checkboxArray,
             defaultBetAmount=DEFAULT_BET_NUMBER[this.code].split(',');
-        if(this.inputArray[__index]){
-            for(let i=0;i<defaultBetAmount.length;i++){
-                let curChk=this.checkboxArray[i],
-                    curIpt=this.inputArray[i]
-                if(i==__index && this.inputArray[i]){
-                    tmpChkArray.push(true)
-                    tmpIptArray.push(this.inputArray[i])
-                }
-                else{
-                    tmpChkArray.push(curChk)
-                    tmpIptArray.push(curIpt)
-                }
-            }
-            tmpIptArray.forEach((value)=>{
-                if(value){
-                    tmpBetTotal+=parseInt(value)
-                }
-            })
-            this.inputArray=tmpIptArray
-            this.betTotalAmount=tmpBetTotal
-            this.checkboxArray=tmpChkArray
+        let curChk=tmpChkArray[__index],curIpt=tmpIptArray[__index];
+        if(curIpt){
+            tmpChkArray.splice(__index,1,true)
+            tmpIptArray.splice(__index,1,this.inputArray[__index])
         }
+        else{
+            tmpChkArray.splice(__index,1,false)
+            tmpIptArray.splice(__index,1,'')
+        }
+        tmpIptArray.forEach((value)=>{
+            if(value){
+                tmpBetTotal+=parseInt(value)
+            }
+        })
+        this.inputArray=tmpIptArray
+        this.betTotalAmount=tmpBetTotal
+        this.checkboxArray=tmpChkArray
     },//手动输入框修改
     useSuohaQuoTaEvent(__amount){
         let tmpChkArray=this.checkboxArray,
@@ -501,11 +486,11 @@ methods:{
     },//获取游戏固定赔率
     submitBet(){
         if(this.betTotalAmount<this.minBetAmount || this.betTotalAmount>this.maxBetAmount){
-            Toast('骚年..不够,多投点')
+            Toast('穷逼..太小了不让玩')
             return;
         }
         if(this.betTotalAmount>this.userInfo.amount){
-            Toast('骚年..钱不够就不要玩了')
+            Toast('穷逼..没钱就不要玩了!')
             return;            
         }
         var data = {
@@ -518,7 +503,7 @@ methods:{
             datatype: "json",
             zone: -8
         }
-        MessageBox.confirm('骚年..确定投注: '+this.Thousands(this.betTotalAmount)+' 金币?').then(action => {
+        MessageBox.confirm('大爷..确定投注: '+this.Thousands(this.betTotalAmount)+' 金币?').then(action => {
             httpPost(HTTP_URL_API.GAME_BETINFO,createSign(data)).then((res)=>{
                 if(res){
                     if(res.data.code!=0){
@@ -536,7 +521,7 @@ methods:{
                             email:this.userInfo.email
                         }
                         this.USER_CHANGE(users)
-                        var instance= Toast('骚年..投注成功')
+                        var instance= Toast('大爷..投注成功')
                         let tmpIptArray=[],tmpChkArray=[]
                         this.defaultBetNumber.forEach((vaule,index)=>{
                             tmpIptArray.push('')

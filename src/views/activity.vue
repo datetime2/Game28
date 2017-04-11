@@ -36,7 +36,7 @@
                       <img src="../assets/images/activity/up.png">
                     </div>
                   </div>
-                  <div class="bgcon" v-html="activity.Remark" style="display:none" v-show='index===tempIndex'>
+                  <div class="bgcon" v-html="activity.Remark" v-show="index===showIndex && isShow">
                   </div>
                 </li>
             </ul>
@@ -59,7 +59,7 @@
                           参与： 所有认证会员
                         </p>
                         <p>
-                          时间：{{activity.StartDate}}至{{activity.EndDate}}
+                          时间：{{DateFormat(activity.StartDate,'yyyy-MM-dd')}}至{{DateFormat(activity.EndDate,'yyyy-MM-dd')}}
                         </p>
                       </div>
                     </div>
@@ -69,7 +69,7 @@
                       <img src="../assets/images/activity/up.png">
                     </div>
                   </div>
-                  <div class="bgcon" v-html="activity.Remark" style="display:none" v-show="index===tempIndex">
+                  <div class="bgcon" v-html="activity.Remark" v-show="index===showIndex && isShow">
                   </div>
                 </li>
             </ul>
@@ -92,7 +92,9 @@ data(){
     return {
         selected:'1',
         activityList:[],
-        tempIndex:-1
+        showIndex:-1,
+        isShow:false,
+        showText:'展开'
     }
 },    
 created () {
@@ -108,7 +110,8 @@ methods:{
         this.SHOW_BACK_BUT(true)
     },
     tabSelectEvent(__tabs){
-      this.tempIndex=-1
+      this.showIndex=-1
+      this.isShow=false
       this.selected=__tabs
         let actity={
           t:__tabs
@@ -125,7 +128,9 @@ methods:{
       return dateFormat(val,format)
     },
     foldDivEvent(__index){
-      this.tempIndex=__index//this.tempIndex==-1?__index:-1
+      let show=this.isShow,index=this.showIndex
+      this.showIndex=__index
+      this.isShow=!show
     }
   },
   components: {HeadNav,FootNav}
